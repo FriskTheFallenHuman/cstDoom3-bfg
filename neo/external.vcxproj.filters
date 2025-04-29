@@ -1,0 +1,631 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="jpeg-6">
+      <UniqueIdentifier>{be59fb10-0a86-4e8d-a0e3-f6029f24da5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zlib">
+      <UniqueIdentifier>{2d5b407e-8075-4eda-b4d1-1327db0580c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ogg">
+      <UniqueIdentifier>{353c6620-191b-40ef-82aa-66b6f373cdce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="theora">
+      <UniqueIdentifier>{7e3839cb-a928-40bc-8c15-6afebe10be75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="binkdec">
+      <UniqueIdentifier>{e3501f3f-6636-44f5-9879-8db36248295c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="timidity">
+      <UniqueIdentifier>{ba2d93ef-de29-43a0-af7f-b2e38395519e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="png">
+      <UniqueIdentifier>{c70bc856-6033-4e36-a707-9ef0ba26d84c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="_libs\jpeg-6\jcapimin.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jccoefct.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jccolor.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jcdctmgr.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jchuff.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jcinit.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jcmainct.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jcmarker.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jcmaster.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jcomapi.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jcparam.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jcphuff.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jcprepct.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jcsample.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdapimin.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdapistd.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdatadst.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdatasrc.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdcoefct.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdcolor.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jddctmgr.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdhuff.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdinput.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdmainct.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdmarker.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdmaster.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdmerge.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdphuff.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdpostct.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdsample.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jdtrans.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jerror.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jfdctflt.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jfdctfst.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jfdctint.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jidctflt.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jidctfst.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jidctint.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jidctred.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jmemmgr.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jmemnobs.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jquant1.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jquant2.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\jpeg-6\jutils.cpp">
+      <Filter>jpeg-6</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\zlib\adler32.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\zlib\compress.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\zlib\crc32.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\zlib\deflate.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\zlib\gzio.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\zlib\infback.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\zlib\inffast.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\zlib\inflate.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\zlib\inftrees.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\zlib\trees.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\zlib\uncompr.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\zlib\zutil.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libogg\src\bitwise.c">
+      <Filter>ogg</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libogg\src\framing.c">
+      <Filter>ogg</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\x86_vc\x86state.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\analyze.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\apiwrapper.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\bitpack.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\decapiwrapper.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\decinfo.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\decode.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\dequant.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\encapiwrapper.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\encfrag.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\encinfo.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\encode.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\encoder_disabled.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\enquant.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\fdct.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\fragment.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\huffdec.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\huffenc.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\idct.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\info.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\internal.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\mathops.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\mcenc.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\x86_vc\mmxencfrag.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\x86_vc\mmxfdct.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\x86_vc\mmxfrag.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\x86_vc\mmxidct.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\x86_vc\mmxstate.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\quant.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\rate.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\state.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\tokenize.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\x86_vc\x86cpu.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libtheora\lib\x86_vc\x86enc.c">
+      <Filter>theora</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libbinkdec\src\avfft.c">
+      <Filter>binkdec</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libbinkdec\src\BinkAudio.cpp">
+      <Filter>binkdec</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libbinkdec\src\BinkDecoder.cpp">
+      <Filter>binkdec</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libbinkdec\src\BinkVideo.cpp">
+      <Filter>binkdec</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libbinkdec\src\BitReader.cpp">
+      <Filter>binkdec</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libbinkdec\src\dct.c">
+      <Filter>binkdec</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libbinkdec\src\dct32.c">
+      <Filter>binkdec</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libbinkdec\src\fft.c">
+      <Filter>binkdec</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libbinkdec\src\FileStream.cpp">
+      <Filter>binkdec</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libbinkdec\src\HuffmanVLC.cpp">
+      <Filter>binkdec</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libbinkdec\src\LogError.cpp">
+      <Filter>binkdec</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libbinkdec\src\mdct.c">
+      <Filter>binkdec</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libbinkdec\src\rdft.c">
+      <Filter>binkdec</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libbinkdec\src\Util.cpp">
+      <Filter>binkdec</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\timidity\common.cpp">
+      <Filter>timidity</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\timidity\controls.cpp">
+      <Filter>timidity</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\timidity\filter.cpp">
+      <Filter>timidity</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\timidity\instrum.cpp">
+      <Filter>timidity</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\timidity\mix.cpp">
+      <Filter>timidity</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\timidity\output.cpp">
+      <Filter>timidity</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\timidity\playmidi.cpp">
+      <Filter>timidity</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\timidity\readmidi.cpp">
+      <Filter>timidity</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\timidity\resample.cpp">
+      <Filter>timidity</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\timidity\sdl_a.cpp">
+      <Filter>timidity</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\timidity\sdl_c.cpp">
+      <Filter>timidity</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\timidity\tables.cpp">
+      <Filter>timidity</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\timidity\timidity.cpp">
+      <Filter>timidity</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\png.c">
+      <Filter>png</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\pngerror.c">
+      <Filter>png</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\pngget.c">
+      <Filter>png</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\pngmem.c">
+      <Filter>png</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\pngpread.c">
+      <Filter>png</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\pngread.c">
+      <Filter>png</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\pngrio.c">
+      <Filter>png</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\pngrtran.c">
+      <Filter>png</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\pngrutil.c">
+      <Filter>png</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\pngset.c">
+      <Filter>png</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\pngtrans.c">
+      <Filter>png</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\pngwio.c">
+      <Filter>png</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\pngwrite.c">
+      <Filter>png</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\pngwtran.c">
+      <Filter>png</Filter>
+    </ClCompile>
+    <ClCompile Include="_libs\libpng\pngwutil.c">
+      <Filter>png</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="_libs\jpeg-6\jchuff.h">
+      <Filter>jpeg-6</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\jpeg-6\jconfig.h">
+      <Filter>jpeg-6</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\jpeg-6\jdct.h">
+      <Filter>jpeg-6</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\jpeg-6\jdhuff.h">
+      <Filter>jpeg-6</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\jpeg-6\jerror.h">
+      <Filter>jpeg-6</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\jpeg-6\jinclude.h">
+      <Filter>jpeg-6</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\jpeg-6\jmemsys.h">
+      <Filter>jpeg-6</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\jpeg-6\jmorecfg.h">
+      <Filter>jpeg-6</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\jpeg-6\jpegint.h">
+      <Filter>jpeg-6</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\jpeg-6\jpeglib.h">
+      <Filter>jpeg-6</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\jpeg-6\jversion.h">
+      <Filter>jpeg-6</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libogg\include\ogg\ogg.h">
+      <Filter>ogg</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libogg\include\ogg\os_types.h">
+      <Filter>ogg</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\apiwrapper.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\bitpack.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\include\theora\codec.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\dct.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\decint.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\dequant.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\encint.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\enquant.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\huffdec.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\huffenc.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\huffman.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\idct.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\internal.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\mathops.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\modedec.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\ocintrin.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\quant.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\include\theora\theora.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\include\theora\theoradec.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libtheora\lib\x86_vc\x86cpu.h">
+      <Filter>theora</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\avfft.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\BinkAudio.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\binkdata.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\BinkDecoder.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\BinkVideo.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\BitReader.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\dct.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\dct32.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\FFmpeg_includes.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\fft.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\fft-internal.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\FileStream.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\HuffmanVLC.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\libbinkdec.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\LogError.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\rdft.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\libbinkdec\include\Util.h">
+      <Filter>binkdec</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\timidity\timidity.h">
+      <Filter>timidity</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\timidity\common.h">
+      <Filter>timidity</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\timidity\config.h">
+      <Filter>timidity</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\timidity\controls.h">
+      <Filter>timidity</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\timidity\filter.h">
+      <Filter>timidity</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\timidity\instrum.h">
+      <Filter>timidity</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\timidity\mix.h">
+      <Filter>timidity</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\timidity\output.h">
+      <Filter>timidity</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\timidity\playmidi.h">
+      <Filter>timidity</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\timidity\readmidi.h">
+      <Filter>timidity</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\timidity\resample.h">
+      <Filter>timidity</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\timidity\structs.h">
+      <Filter>timidity</Filter>
+    </ClInclude>
+    <ClInclude Include="_libs\timidity\tables.h">
+      <Filter>timidity</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_libs\libogg\win32\ogg.def">
+      <Filter>ogg</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="_libs\libpng\scripts\pngwin.rc">
+      <Filter>png</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

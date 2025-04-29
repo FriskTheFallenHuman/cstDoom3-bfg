@@ -1,0 +1,17 @@
+/build*
+*~
+.*.swp
+*.pyc
+.cproject
+.project
+.settings/
+
+/dhewm*
+/*-releases/
+/neo/.vs*
+/neo/out*
+/neo/build*
+/.vs*
+
+/neo/CMakeSettings.json
+/neo/_libs/libpng/pnglibconf.h

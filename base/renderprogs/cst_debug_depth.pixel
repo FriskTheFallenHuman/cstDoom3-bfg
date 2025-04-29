@@ -1,0 +1,84 @@
+//#modified-fva; BEGIN
+#include "global.inc"
+
+uniform sampler2D samp0 : register(s0);
+
+uniform float4 rpUser0 : register( c128 );
+
+struct PS_IN {
+	float4 position : VPOS;
+	float2 texcoord0 : TEXCOORD0_centroid;
+};
+
+struct PS_OUT {
+	float4 color : COLOR;
+};
+
+void main( PS_IN fragment, out PS_OUT result ) {
+	float4 outColor = float4(0.0, 0.0, 0.0, 1.0);
+	float2 tCoords = fragment.texcoord0;
+
+	BRANCH if (rpUser0.x == 0.0) {
+		// original color approach
+		float4 depthColor = tex2D(samp0, tCoords);
+		outColor = float4(depthColor.x, depthColor.y, depthColor.z, 1.0);
+	} else {
+		float depthBuff = tex2D(samp0, tCoords).x;
+
+		const float depthLimit = 0.999;
+		float depthBuffLimited = clamp(depthBuff, 0.0, depthLimit);
+
+		float maxDepthEye = 1.0 / (depthLimit - 1.0);
+		float depthEyeFactor1 = (maxDepthEye + 1.0);
+		float depthEyeTerm1 = 1.0 / ((depthBuffLimited - 1.0) * depthEyeFactor1);
+		float depthEyeTerm2 = 1.0 / depthEyeFactor1;
+		float depthEye = depthEyeTerm1 + depthEyeTerm2;
+
+		const float minIntensity = 0.1;
+
+		float cyan = (depthBuff - depthLimit) / (1.0 - depthLimit);
+		cyan = cyan * (1.0 - minIntensity) + minIntensity;
+		float selectorCyan = float(depthBuff > depthLimit);
+
+		BRANCH if (rpUser0.x == 1.0) {
+			// alternative color approach
+			const float minRed = 0.0;
+			const float minGreen = 0.1;
+			const float minBlue = 0.3;
+
+			const float maxRed = minGreen;
+			const float maxGreen = minBlue;
+			const float maxBlue = 1.0;
+
+			float selectorRed = float(depthEye >= minRed && depthEye < maxRed);
+			float selectorGreen = float(depthEye >= minGreen && depthEye < maxGreen);
+			float selectorBlue = float(depthEye >= minBlue && depthEye <= maxBlue);
+
+			selectorRed *= (1.0 - selectorCyan);
+			selectorGreen *= (1.0 - selectorCyan);
+			selectorBlue *= (1.0 - selectorCyan);
+
+			float red = (depthEye - minRed) / (maxRed - minRed);
+			red = red * (1.0 - minIntensity) + minIntensity;
+			red *= selectorRed;
+
+			float green = (depthEye - minGreen) / (maxGreen - minGreen);
+			green = green * (1.0 - minIntensity) + minIntensity;
+			green = green * selectorGreen + cyan * selectorCyan;
+
+			float blue = (depthEye - minBlue) / (maxBlue - minBlue);
+			blue = blue * (1.0 - minIntensity) + minIntensity;
+			blue = blue * selectorBlue + cyan * selectorCyan;
+
+			outColor = float4(red, green, blue, 1.0);
+		} else {
+			// grayscale (+ cyan for very large depths)
+			float red = depthEye * (1.0 - selectorCyan);
+			float green = depthEye * (1.0 - selectorCyan) + cyan * selectorCyan;
+			float blue = depthEye * (1.0 - selectorCyan) + cyan * selectorCyan;
+			outColor = float4(red, green, blue, 1.0);
+		}
+	}
+	result.color = outColor;
+}
+//#modified-fva; END

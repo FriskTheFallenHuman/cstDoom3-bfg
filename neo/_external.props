@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_PropertySheetDisplayName>External</_PropertySheetDisplayName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>_BIND_TO_CURRENT_CRT_VERSION;OC_X86_ASM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)_libs\libpng;$(SolutionDir)_libs\jpeg-6;$(SolutionDir)_libs\libtheora\include;$(SolutionDir)_libs\libtheora\lib;$(SolutionDir)_libs\libogg\include;$(SolutionDir)_libs\libbinkdec\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4244;4267;4057;4100;4245;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <PreBuildEvent>
+      <Command>copy /y $(SolutionDir)_libs\libpng\scripts\pnglibconf.h.prebuilt $(SolutionDir)_libs\libpng\pnglibconf.h</Command>
+      <Message>Generating pnglibconf.h</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

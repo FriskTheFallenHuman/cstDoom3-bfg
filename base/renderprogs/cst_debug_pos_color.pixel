@@ -1,0 +1,16 @@
+//#modified-fva; BEGIN
+#include "global.inc"
+
+struct PS_IN {
+	float4 position : VPOS;
+	float4 color : COLOR0;
+};
+
+struct PS_OUT {
+	float4 color : COLOR;
+};
+
+void main( PS_IN fragment, out PS_OUT result ) {
+	result.color = fragment.color;
+}
+//#modified-fva; END

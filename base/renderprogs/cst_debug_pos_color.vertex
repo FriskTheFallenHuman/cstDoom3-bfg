@@ -1,0 +1,21 @@
+//#modified-fva; BEGIN
+#include "global.inc"
+
+struct VS_IN {
+	float4 position : POSITION;
+	float4 color : COLOR0;
+};
+
+struct VS_OUT {
+	float4 position : POSITION;
+	float4 color : COLOR0;
+};
+
+void main( VS_IN vertex, out VS_OUT result ) {
+	result.position.x = dot4(vertex.position, rpMVPmatrixX);
+	result.position.y = dot4(vertex.position, rpMVPmatrixY);
+	result.position.z = dot4(vertex.position, rpMVPmatrixZ);
+	result.position.w = dot4(vertex.position, rpMVPmatrixW);
+	result.color = vertex.color;
+}
+//#modified-fva; END

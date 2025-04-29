@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <_PropertySheetDisplayName>Doom III Executable</_PropertySheetDisplayName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>_libs\libogg\include;_libs\libtheora\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>__DOOM__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>precompiled.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <StackReserveSize>16777216</StackReserveSize>
+      <StackCommitSize>16777216</StackCommitSize>
+      <LargeAddressAware>true</LargeAddressAware>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copying files to bin/ directory</Message>
+      <Command>copy "$(OutDir)$(TargetName).exe" "$(SolutionDir)..\bin\cstdoom3-bfg.exe" /Y
+
+if exist "$(OutDir)$(TargetName).pdb" (
+    copy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)..\bin\cstdoom3-bfg.pdb" /D /Y
+)
+
+if exist "$(OutDir)$(TargetName).map" (
+    copy "$(OutDir)$(TargetName).map" "$(SolutionDir)..\bin\cstdoom3-bfg.map" /D /Y
+)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+</Project>
