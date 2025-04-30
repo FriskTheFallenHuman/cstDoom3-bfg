@@ -88,7 +88,11 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifdef ID_PC_WIN
 
+#ifdef ID_PC_WIN64
+#define	CPUSTRING						"x64"
+#else
 #define	CPUSTRING						"x86"
+#endif
 
 #define	BUILD_STRING					"win-" CPUSTRING
 #define BUILD_OS_ID						0
@@ -132,8 +136,8 @@ Defines and macros usable in all code
 
 #define ALIGN( x, a ) ( ( ( x ) + ((a)-1) ) & ~((a)-1) )
 
-#define _alloca16( x )					((void *)ALIGN( (UINT_PTR)_alloca( ALIGN( x, 16 ) + 16 ), 16 ) )
-#define _alloca128( x )					((void *)ALIGN( (UINT_PTR)_alloca( ALIGN( x, 128 ) + 128 ), 128 ) )
+#define _alloca16( x )					((void *)ALIGN( (uintptr_t)_alloca( ALIGN( x, 16 ) + 16 ), 16 ) )
+#define _alloca128( x )					((void *)ALIGN( (uintptr_t)_alloca( ALIGN( x, 128 ) + 128 ), 128 ) )
 
 #define likely( x )	( x )
 #define unlikely( x )	( x )
@@ -204,6 +208,9 @@ bulk of the codebase, so it is the best place for analyze pragmas.
 #pragma warning( disable: 5033 )	// warning C5033: 'register' is no longer a supported storage class
 #pragma warning( disable: 5054 )	// warning C5054: operator '+': deprecated between enumerations of different types
 #pragma warning( disable: 5055 )	// warning C5055: operator '==': deprecated between enumerations and floating-point types
+
+// x86_64 Warnings
+#pragma warning( disable: 4267 )	// warning C4267: conversion from 'size_t' to 'int', possible loss of data
 
 // checking format strings catches a LOT of errors
 //#include <CodeAnalysis\SourceAnnotations.h>

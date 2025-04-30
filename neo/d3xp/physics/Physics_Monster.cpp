@@ -780,7 +780,7 @@ void idPhysics_Monster::WriteToSnapshot( idBitMsg &msg ) const {
 	msg.WriteDeltaFloat( 0.0f, current.pushVelocity[0], MONSTER_VELOCITY_EXPONENT_BITS, MONSTER_VELOCITY_MANTISSA_BITS );
 	msg.WriteDeltaFloat( 0.0f, current.pushVelocity[1], MONSTER_VELOCITY_EXPONENT_BITS, MONSTER_VELOCITY_MANTISSA_BITS );
 	msg.WriteDeltaFloat( 0.0f, current.pushVelocity[2], MONSTER_VELOCITY_EXPONENT_BITS, MONSTER_VELOCITY_MANTISSA_BITS );
-	msg.WriteLong( current.atRest );
+	msg.WriteInt( current.atRest );
 	msg.WriteBits( current.onGround, 1 );
 }
 
@@ -802,6 +802,6 @@ void idPhysics_Monster::ReadFromSnapshot( const idBitMsg &msg ) {
 	current.pushVelocity[0] = msg.ReadDeltaFloat( 0.0f, MONSTER_VELOCITY_EXPONENT_BITS, MONSTER_VELOCITY_MANTISSA_BITS );
 	current.pushVelocity[1] = msg.ReadDeltaFloat( 0.0f, MONSTER_VELOCITY_EXPONENT_BITS, MONSTER_VELOCITY_MANTISSA_BITS );
 	current.pushVelocity[2] = msg.ReadDeltaFloat( 0.0f, MONSTER_VELOCITY_EXPONENT_BITS, MONSTER_VELOCITY_MANTISSA_BITS );
-	current.atRest = msg.ReadLong();
+	current.atRest = msg.ReadInt();
 	current.onGround = msg.ReadBits( 1 ) != 0;
 }

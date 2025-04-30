@@ -301,7 +301,7 @@ static int		(*_IntForSixtets)( byte *in );
 short	BigShort( short l ) { return _BigShort( l ); }
 short	LittleShort( short l ) { return _LittleShort( l ); }
 int		BigLong( int l ) { return _BigLong( l ); }
-int		LittleLong( int l ) { return _LittleLong( l ); }
+int		LittleInt( int l ) { return _LittleLong( l ); }
 float	BigFloat( float l ) { return _BigFloat( l ); }
 float	LittleFloat( float l ) { return _LittleFloat( l ); }
 void	BigRevBytes( void *bp, int elsize, int elcount ) { _BigRevBytes( bp, elsize, elcount ); }

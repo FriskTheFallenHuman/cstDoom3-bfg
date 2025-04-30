@@ -51,6 +51,7 @@ If you have questions concerning this license or the applicable additional terms
 #endif /* !_D3SDK */
 
 #include <intrin.h>			// needed for intrinsics like _mm_setzero_si28
+#include <xmmintrin.h>		// needed for SIMD instructions like MXCSR manipulation
 #include <malloc.h>			// no malloc.h on mac or unix
 
 #include <windows.h>		// for qgl.h
@@ -88,6 +89,7 @@ If you have questions concerning this license or the applicable additional terms
 #include <cerrno>
 #include <cmath>
 #include <climits>
+#include <thread>
 
 // STL
 #include <typeinfo>

@@ -34,43 +34,12 @@ If you have questions concerning this license or the applicable additional terms
 
 #include <Windowsx.h>
 
-LONG WINAPI MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
-
-static bool s_alttab_disabled;
+LRESULT CALLBACK MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 
 extern idCVar r_windowX;
 extern idCVar r_windowY;
 extern idCVar r_windowWidth;
 extern idCVar r_windowHeight;
-
-static void WIN_DisableAltTab() {
-	if ( s_alttab_disabled || win32.win_allowAltTab.GetBool() ) {
-		return;
-	}
-	if ( !idStr::Icmp( cvarSystem->GetCVarString( "sys_arch" ), "winnt" ) ) {
-		RegisterHotKey( 0, 0, MOD_ALT, VK_TAB );
-	} else {
-		BOOL old;
-
-		SystemParametersInfo( SPI_SCREENSAVERRUNNING, 1, &old, 0 );
-	}
-	s_alttab_disabled = true;
-}
-
-static void WIN_EnableAltTab() {
-	if ( !s_alttab_disabled || win32.win_allowAltTab.GetBool() ) {
-		return;
-	}
-	if ( !idStr::Icmp( cvarSystem->GetCVarString( "sys_arch" ), "winnt" ) ) {
-		UnregisterHotKey( 0, 0 );
-	} else {
-		BOOL old;
-
-		SystemParametersInfo( SPI_SCREENSAVERRUNNING, 0, &old, 0 );
-	}
-
-	s_alttab_disabled = false;
-}
 
 void WIN_Sizing(WORD side, RECT *rect)
 {
@@ -143,7 +112,7 @@ MainWndProc
 main window procedure
 ====================
 */
-LONG WINAPI MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
+LRESULT CALLBACK MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
 	int key;
 	switch( uMsg ) {
 		case WM_WINDOWPOSCHANGED:
@@ -191,12 +160,6 @@ LONG WINAPI MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
 
 			win32.hWnd = hWnd;
 
-			if ( win32.cdsFullscreen ) {
-				WIN_DisableAltTab();
-			} else {
-				WIN_EnableAltTab();
-			}
-
 			// do the OpenGL setup
 			void GLW_WM_CREATE( HWND hWnd );
 			GLW_WM_CREATE( hWnd );
@@ -206,9 +169,6 @@ LONG WINAPI MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
 		case WM_DESTROY:
 			// let sound and input know about this?
 			win32.hWnd = NULL;
-			if ( win32.cdsFullscreen ) {
-				WIN_EnableAltTab();
-			}
 			break;
 
 		case WM_CLOSE:
@@ -431,5 +391,5 @@ LONG WINAPI MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
 		}
 	}
 
-    return DefWindowProc( hWnd, uMsg, wParam, lParam );
+	return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }

@@ -93,27 +93,21 @@ idEventDef::idEventDef( const char *command, const char *formatspec, char return
 		switch( formatspec[ i ] ) {
 		case D_EVENT_FLOAT :
 			bits |= 1 << i;
-			argsize += sizeof( float );
+			argsize += sizeof( intptr_t );
 			break;
 
 		case D_EVENT_INTEGER :
-			argsize += sizeof( int );
+		case D_EVENT_ENTITY :
+		case D_EVENT_ENTITY_NULL :
+			argsize += sizeof( intptr_t );
 			break;
 
 		case D_EVENT_VECTOR :
-			argsize += sizeof( idVec3 );
+			argsize += E_EVENT_SIZEOF_VEC;
 			break;
 
 		case D_EVENT_STRING :
 			argsize += MAX_STRING_LEN;
-			break;
-
-		case D_EVENT_ENTITY :
-			argsize += sizeof( idEntityPtr<idEntity> );
-			break;
-
-		case D_EVENT_ENTITY_NULL :
-			argsize += sizeof( idEntityPtr<idEntity> );
 			break;
 
 		case D_EVENT_TRACE :
@@ -334,7 +328,7 @@ idEvent *idEvent::Alloc( const idEventDef *evdef, int numargs, va_list args ) {
 idEvent::CopyArgs
 ================
 */
-void idEvent::CopyArgs( const idEventDef *evdef, int numargs, va_list args, int data[ D_EVENT_MAXARGS ] ) {
+void idEvent::CopyArgs( const idEventDef *evdef, int numargs, va_list args, intptr_t data[ D_EVENT_MAXARGS ] ) {
 	int			i;
 	const char	*format;
 	idEventArg	*arg;
@@ -494,7 +488,7 @@ idEvent::ServiceEvents
 void idEvent::ServiceEvents() {
 	idEvent		*event;
 	int			num;
-	int			args[ D_EVENT_MAXARGS ];
+	intptr_t	args[ D_EVENT_MAXARGS ];
 	int			offset;
 	int			i;
 	int			numargs;
@@ -567,14 +561,6 @@ void idEvent::ServiceEvents() {
 		assert( event->object );
 		event->object->ProcessEventArgPtr( ev, args );
 
-#if 0
-		// event functions may never leave return values on the FPU stack
-		// enable this code to check if any event call left values on the FPU stack
-		if ( !sys->FPU_StackIsEmpty() ) {
-			gameLocal.Error( "idEvent::ServiceEvents %d: %s left a value on the FPU stack\n", num, ev->GetName() );
-		}
-#endif
-
 		// return the event to the free list
 		event->Free();
 
@@ -595,7 +581,7 @@ idEvent::ServiceFastEvents
 void idEvent::ServiceFastEvents() {
 	idEvent	*event;
 	int		num;
-	int			args[ D_EVENT_MAXARGS ];
+	intptr_t	args[ D_EVENT_MAXARGS ];
 	int			offset;
 	int			i;
 	int			numargs;
@@ -665,14 +651,6 @@ void idEvent::ServiceFastEvents() {
 		event->eventNode.Remove();
 		assert( event->object );
 		event->object->ProcessEventArgPtr( ev, args );
-
-#if 0
-		// event functions may never leave return values on the FPU stack
-		// enable this code to check if any event call left values on the FPU stack
-		if ( !sys->FPU_StackIsEmpty() ) {
-			gameLocal.Error( "idEvent::ServiceEvents %d: %s left a value on the FPU stack\n", num, event->eventdef->GetName() );
-		}
-#endif
 
 		// return the event to the free list
 		event->Free();
@@ -753,6 +731,7 @@ void idEvent::Save( idSaveGame *savefile ) {
 	byte *dataPtr;
 	bool validTrace;
 	const char	*format;
+	idStr s;
 
 	savefile->WriteInt( EventQueue.Num() );
 
@@ -769,17 +748,26 @@ void idEvent::Save( idSaveGame *savefile ) {
 			switch( format[ i ] ) {
 				case D_EVENT_FLOAT :
 					savefile->WriteFloat( *reinterpret_cast<float *>( dataPtr ) );
-					size += sizeof( float );
+					size += sizeof( intptr_t );
 					break;
 				case D_EVENT_INTEGER :
+					savefile->WriteInt( *reinterpret_cast<int *>( dataPtr ) );
+					size += sizeof( intptr_t );
+					break;
 				case D_EVENT_ENTITY :
 				case D_EVENT_ENTITY_NULL :
-					savefile->WriteInt( *reinterpret_cast<int *>( dataPtr ) );
-					size += sizeof( int );
+					reinterpret_cast< idEntityPtr<idEntity> * >( dataPtr )->Save(savefile);
+					size += sizeof( intptr_t );
 					break;
 				case D_EVENT_VECTOR :
 					savefile->WriteVec3( *reinterpret_cast<idVec3 *>( dataPtr ) );
-					size += sizeof( idVec3 );
+					size += E_EVENT_SIZEOF_VEC;
+					break;
+				case D_EVENT_STRING :
+					s.Clear();
+					s.Append(reinterpret_cast<char *>(dataPtr));
+					savefile->WriteString(s);
+					size += MAX_STRING_LEN;
 					break;
 				case D_EVENT_TRACE :
 					validTrace = *reinterpret_cast<bool *>( dataPtr );
@@ -800,7 +788,7 @@ void idEvent::Save( idSaveGame *savefile ) {
 					break;
 			}
 		}
-		assert( size == (int)event->eventdef->GetArgSize() );
+		assert( size == event->eventdef->GetArgSize() );
 		event = event->eventNode.Next();
 	}
 
@@ -832,6 +820,7 @@ void idEvent::Restore( idRestoreGame *savefile ) {
 	byte *dataPtr;
 	idEvent	*event;
 	const char	*format;
+	idStr s;
 
 	savefile->ReadInt( num );
 
@@ -866,7 +855,7 @@ void idEvent::Restore( idRestoreGame *savefile ) {
 
 		// read the args
 		savefile->ReadInt( argsize );
-		if ( argsize != (int)event->eventdef->GetArgSize() ) {
+		if ( argsize != event->eventdef->GetArgSize() ) {
 			savefile->Error( "idEvent::Restore: arg size (%d) doesn't match saved arg size(%d) on event '%s'", event->eventdef->GetArgSize(), argsize, event->eventdef->GetName() );
 		}
 		if ( argsize ) {
@@ -878,17 +867,25 @@ void idEvent::Restore( idRestoreGame *savefile ) {
 				switch( format[ j ] ) {
 					case D_EVENT_FLOAT :
 						savefile->ReadFloat( *reinterpret_cast<float *>( dataPtr ) );
-						size += sizeof( float );
+						size += sizeof( intptr_t );
 						break;
 					case D_EVENT_INTEGER :
+						savefile->ReadInt( *reinterpret_cast<int *>( dataPtr ) );
+						size += sizeof( intptr_t );
+						break;
 					case D_EVENT_ENTITY :
 					case D_EVENT_ENTITY_NULL :
-						savefile->ReadInt( *reinterpret_cast<int *>( dataPtr ) );
-						size += sizeof( int );
+						reinterpret_cast< idEntityPtr<idEntity> * >( dataPtr )->Restore(savefile);
+						size += sizeof( intptr_t );
 						break;
 					case D_EVENT_VECTOR :
 						savefile->ReadVec3( *reinterpret_cast<idVec3 *>( dataPtr ) );
-						size += sizeof( idVec3 );
+						size += E_EVENT_SIZEOF_VEC;
+						break;
+					case D_EVENT_STRING :
+						savefile->ReadString(s);
+						idStr::Copynz(reinterpret_cast<char *>(dataPtr), s, MAX_STRING_LEN);
+						size += MAX_STRING_LEN;
 						break;
 					case D_EVENT_TRACE :
 						savefile->ReadBool( *reinterpret_cast<bool *>( dataPtr ) );
@@ -908,7 +905,7 @@ void idEvent::Restore( idRestoreGame *savefile ) {
 						break;
 				}
 			}
-			assert( size == (int)event->eventdef->GetArgSize() );
+			assert( size == event->eventdef->GetArgSize() );
 		} else {
 			event->data = NULL;
 		}
@@ -948,7 +945,7 @@ void idEvent::Restore( idRestoreGame *savefile ) {
 
 		// read the args
 		savefile->ReadInt( argsize );
-		if ( argsize != (int)event->eventdef->GetArgSize() ) {
+		if ( argsize != event->eventdef->GetArgSize() ) {
 			savefile->Error( "idEvent::Restore: arg size (%d) doesn't match saved arg size(%d) on event '%s'", event->eventdef->GetArgSize(), argsize, event->eventdef->GetName() );
 		}
 		if ( argsize ) {
@@ -1025,7 +1022,7 @@ void CreateEventCallbackHandler() {
 
 	file = fileSystem->OpenFileWrite( "Callbacks.cpp" );
 
-	file->Printf( "/*\n================================================================================================\nCONFIDENTIAL AND PROPRIETARY INFORMATION/NOT FOR DISCLOSURE WITHOUT WRITTEN PERMISSION \nCopyright 1999-2012 id Software LLC, a ZeniMax Media company. All Rights Reserved. \n================================================================================================\n*/\n\n" );
+	file->Printf( "// generated file - see CREATE_EVENT_CODE\n\n" );
 
 	for( i = 1; i <= D_EVENT_MAXARGS; i++ ) {
 
@@ -1045,8 +1042,8 @@ void CreateEventCallbackHandler() {
 					string1 += "const float";
 					string2 += va( "*( float * )&data[ %d ]", k );
 				} else {
-					string1 += "void *";
-					string2 += va( "(void *)data[ %d ]", k );
+					string1 += "const intptr_t";
+					string2 += va( "data[ %d ]", k );
 				}
 
 				if ( k < i - 1 ) {

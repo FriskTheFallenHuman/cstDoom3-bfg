@@ -73,10 +73,10 @@ static void Encode( unsigned char *output, UINT4 *input, unsigned int len ) {
 	unsigned int i, j;
 
 	for ( i = 0, j = 0; j < len; i++, j += 4 ) {
- 		output[j] = (unsigned char)(input[i] & 0xff);
- 		output[j+1] = (unsigned char)((input[i] >> 8) & 0xff);
- 		output[j+2] = (unsigned char)((input[i] >> 16) & 0xff);
- 		output[j+3] = (unsigned char)((input[i] >> 24) & 0xff);
+		output[j] = (unsigned char)(input[i] & 0xff);
+		output[j+1] = (unsigned char)((input[i] >> 8) & 0xff);
+		output[j+2] = (unsigned char)((input[i] >> 16) & 0xff);
+		output[j+3] = (unsigned char)((input[i] >> 24) & 0xff);
 	}
 }
 
@@ -91,7 +91,7 @@ static void Decode( UINT4 *output, const unsigned char *input, unsigned int len 
 	unsigned int i, j;
 
 	for ( i = 0, j = 0; j < len; i++, j += 4 ) {
- 		output[i] = ((UINT4)input[j]) | (((UINT4)input[j+1]) << 8) | (((UINT4)input[j+2]) << 16) | (((UINT4)input[j+3]) << 24);
+		output[i] = ((UINT4)input[j]) | (((UINT4)input[j+1]) << 8) | (((UINT4)input[j+2]) << 16) | (((UINT4)input[j+3]) << 24);
 	}
 }
 
@@ -233,16 +233,16 @@ void MD5_Update( MD5_CTX *context, unsigned char const *input, size_t inputLen )
 
 	// Transform as many times as possible.
 	if ( inputLen >= partLen ) {
- 		memcpy( (POINTER)&context->in[index], (POINTER)input, partLen );
- 		MD5_Transform( context->state, context->in );
+		memcpy( (POINTER)&context->in[index], (POINTER)input, partLen );
+		MD5_Transform( context->state, context->in );
 
 		for ( i = partLen; i + 63 < inputLen; i += 64 ) {
- 			MD5_Transform( context->state, &input[i] );
+			MD5_Transform( context->state, &input[i] );
 		}
 
- 		index = 0;
+		index = 0;
 	} else {
- 		i = 0;
+		i = 0;
 	}
 
 	// Buffer remaining input

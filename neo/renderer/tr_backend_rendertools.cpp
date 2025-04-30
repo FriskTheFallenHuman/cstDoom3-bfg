@@ -1495,7 +1495,7 @@ static void RB_ShowSilhouette() {
 				}
 
 				// read the index buffer while trying to keep it write-combined: copy it to another gl buffer and then read the copy
-				qglBindBufferARB(GL_COPY_READ_BUFFER, (GLuint)indexBuffer->GetAPIObject());
+				qglBindBufferARB(GL_COPY_READ_BUFFER, (GLintptrARB)indexBuffer->GetAPIObject());
 				qglBufferDataARB(GL_COPY_WRITE_BUFFER, numShadowIndices * sizeof(triIndex_t), NULL, GL_STREAM_READ);
 				cst_qglCopyBufferSubDataARB(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER, indexOffset, 0, numShadowIndices * sizeof(triIndex_t));
 
@@ -1527,7 +1527,7 @@ static void RB_ShowSilhouette() {
 				}
 
 				// -----------------
-				qglBindBufferARB(GL_ARRAY_BUFFER, (GLuint)vertexBuffer->GetAPIObject());
+				qglBindBufferARB(GL_ARRAY_BUFFER, (GLintptrARB)vertexBuffer->GetAPIObject());
 				qglBufferDataARB(GL_ELEMENT_ARRAY_BUFFER, localIndices.Num() * sizeof(triIndex_t), localIndices.Ptr(), GL_STREAM_DRAW);
 
 				RB_SimpleSurfaceSetup(drawSurf);
@@ -1547,7 +1547,7 @@ static void RB_ShowSilhouette() {
 						continue;
 					}
 
-					const GLuint ubo = reinterpret_cast<GLuint>(jointBuffer.GetAPIObject());
+					const GLintptrARB ubo = reinterpret_cast<GLintptrARB>(jointBuffer.GetAPIObject());
 					qglBindBufferRange(GL_UNIFORM_BUFFER, 0, ubo, jointBuffer.GetOffset(), jointBuffer.GetNumJoints() * sizeof(idJointMat));
 
 					RB_Cst_SetupShadowVertSkinnedLayout();

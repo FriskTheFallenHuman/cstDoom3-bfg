@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <_PropertySheetDisplayName>CPU Arch Properties</_PropertySheetDisplayName>
+    <OutDir>..\build\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>..\build\$(PlatformName)\$(Configuration)\intermediate\$(LibrariesArchitecture)\$(ProjectName)\</IntDir>
+    <OutputFile>$(OutDir)$(TargetName)$(LibrariesArchitecture)$(TargetExt)</OutputFile>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)' == 'Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USE_32BIT_TIME_T;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+</Project>

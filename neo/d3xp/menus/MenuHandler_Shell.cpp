@@ -210,7 +210,7 @@ void idMenuHandler_Shell::Update() {
 					byte buffer[ 128 ];
 					idBitMsg msg;
 					msg.InitWrite( buffer, sizeof( buffer ) );
-					msg.WriteLong( timeRemaining );
+					msg.WriteInt( timeRemaining );
 					session->GetActingGameStateLobbyBase().SendReliable( GAME_RELIABLE_MESSAGE_LOBBY_COUNTDOWN, msg, false );
 				}
 			}

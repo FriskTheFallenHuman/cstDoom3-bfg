@@ -186,6 +186,8 @@ private:
 	static idCVar *			staticVars;
 };
 
+static idCVar const * const staticCVarsInvalid = (const idCVar*)(uintptr_t)0xFFFFFFFF;
+
 ID_INLINE idCVar::idCVar( const char *name, const char *value, int flags, const char *description,
 							argCompletion_t valueCompletion ) {
 	if ( !valueCompletion && ( flags & CVAR_BOOL ) ) {
@@ -300,7 +302,7 @@ ID_INLINE void idCVar::Init( const char *name, const char *value, int flags, con
 	this->integerValue = 0;
 	this->floatValue = 0.0f;
 	this->internalVar = this;
-	if ( staticVars != (idCVar *)0xFFFFFFFF ) {
+	if ( staticVars != staticCVarsInvalid ) {
 		this->next = staticVars;
 		staticVars = this;
 	} else {
@@ -309,11 +311,11 @@ ID_INLINE void idCVar::Init( const char *name, const char *value, int flags, con
 }
 
 ID_INLINE void idCVar::RegisterStaticVars() {
-	if ( staticVars != (idCVar *)0xFFFFFFFF ) {
+	if ( staticVars != staticCVarsInvalid ) {
 		for ( idCVar *cvar = staticVars; cvar; cvar = cvar->next ) {
 			cvarSystem->Register( cvar );
 		}
-		staticVars = (idCVar *)0xFFFFFFFF;
+		staticVars = (idCVar*)staticCVarsInvalid;
 	}
 }
 

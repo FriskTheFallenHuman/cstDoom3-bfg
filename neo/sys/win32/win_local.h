@@ -44,19 +44,7 @@ extern	PFNWGLGETPIXELFORMATATTRIBIVARBPROC wglGetPixelFormatAttribivARB;
 extern	PFNWGLGETPIXELFORMATATTRIBFVARBPROC wglGetPixelFormatAttribfvARB;
 extern	PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB;
 
-// WGL_ARB_pbuffer
-extern	PFNWGLCREATEPBUFFERARBPROC	wglCreatePbufferARB;
-extern	PFNWGLGETPBUFFERDCARBPROC	wglGetPbufferDCARB;
-extern	PFNWGLRELEASEPBUFFERDCARBPROC	wglReleasePbufferDCARB;
-extern	PFNWGLDESTROYPBUFFERARBPROC	wglDestroyPbufferARB;
-extern	PFNWGLQUERYPBUFFERARBPROC	wglQueryPbufferARB;
-
-// WGL_ARB_render_texture
-extern	PFNWGLBINDTEXIMAGEARBPROC		wglBindTexImageARB;
-extern	PFNWGLRELEASETEXIMAGEARBPROC	wglReleaseTexImageARB;
-extern	PFNWGLSETPBUFFERATTRIBARBPROC	wglSetPbufferAttribARB;
-
-#define	WINDOW_STYLE	(WS_OVERLAPPED|WS_BORDER|WS_CAPTION|WS_VISIBLE | WS_THICKFRAME)
+#define	WINDOW_STYLE	(WS_OVERLAPPED|WS_BORDER|WS_CAPTION|WS_VISIBLE|WS_THICKFRAME|WS_SYSMENU)
 
 void	Sys_QueEvent( sysEventType_t type, int value, int value2, int ptrLength, void *ptr, int inputDeviceNum );
 
@@ -64,16 +52,11 @@ void	Sys_CreateConsole();
 void	Sys_DestroyConsole();
 
 char	*Sys_ConsoleInput ();
-char	*Sys_GetCurrentUser();
 
 void	Win_SetErrorText( const char *text );
 
 cpuid_t	Sys_GetCPUId();
 
-// Input subsystem
-
-void	IN_Init ();
-void	IN_Shutdown ();
 // add additional non keyboard / non mouse movement on top of the keyboard move cmd
 
 void	IN_DeactivateMouseIfWindowed();
@@ -82,12 +65,10 @@ void	IN_ActivateMouse();
 
 void	IN_Frame();
 
-void	DisableTaskKeys( BOOL bDisable, BOOL bBeep, BOOL bTaskMgr );
-
 uint64 Sys_Microseconds();
 
 // window procedure
-LONG WINAPI MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 void Conbuf_AppendText( const char *msg );
 
@@ -132,9 +113,6 @@ struct Win32Vars_t {
 	static idCVar	sys_arch;
 	static idCVar	sys_cpustring;
 	static idCVar	in_mouse;
-	static idCVar	win_allowAltTab;
-	static idCVar	win_notaskkeys;
-	static idCVar	win_username;
 	static idCVar	win_outputEditString;
 	static idCVar	win_viewlog;
 	static idCVar	win_timerUpdate;
@@ -149,15 +127,7 @@ struct Win32Vars_t {
 	LPDIRECTINPUTDEVICE8	g_pKeyboard;
 	idJoystickWin32			g_Joystick;
 
-	HANDLE			renderCommandsEvent;
-	HANDLE			renderCompletedEvent;
-	HANDLE			renderActiveEvent;
-	HANDLE			renderThreadHandle;
-	unsigned long	renderThreadId;
-	void			(*glimpRenderThread)();
-	void			*smpData;
 	int				wglErrors;
-	// SMP acceleration vars
 
 };
 

@@ -123,14 +123,14 @@ void idSIMD::Shutdown() {
 
 idSIMDProcessor *p_simd;
 idSIMDProcessor *p_generic;
-long baseClocks = 0;
+int baseClocks = 0;
 
-
+#if !defined(ID_PC_WIN64)
 #define TIME_TYPE int
 
 #pragma warning(disable : 4731)     // frame pointer register 'ebx' modified by inline assembly code
 
-long saved_ebx = 0;
+int saved_ebx = 0;
 
 #define StartRecordTime( start )			\
 	__asm mov saved_ebx, ebx				\
@@ -150,6 +150,17 @@ long saved_ebx = 0;
 	__asm xor eax, eax						\
 	__asm cpuid
 
+#else
+
+#define TIME_TYPE int
+
+#define StartRecordTime( start )			\
+	start = 0;
+
+#define StopRecordTime( end )				\
+	end = 1;
+
+#endif // DG end
 
 #define GetBest( start, end, best )			\
 	if ( !best || end - start < best ) {	\

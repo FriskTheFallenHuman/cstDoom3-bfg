@@ -73,8 +73,8 @@ static SOCKET	socks_socket;
 static char		socksBuf[4096];
 
 typedef struct {
-	unsigned long ip;
-	unsigned long mask;
+	unsigned int ip;
+	unsigned int mask;
 	char addr[16];
 } net_interface;
 

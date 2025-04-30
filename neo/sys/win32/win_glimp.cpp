@@ -207,21 +207,21 @@ FakeWndProc
 Only used to get wglExtensions
 ====================
 */
-LONG WINAPI FakeWndProc (
-    HWND    hWnd,
-    UINT    uMsg,
-    WPARAM  wParam,
-    LPARAM  lParam) {
+static LRESULT CALLBACK FakeWndProc (
+	HWND    hWnd,
+	UINT    uMsg,
+	WPARAM  wParam,
+	LPARAM  lParam) {
 
 	if ( uMsg == WM_DESTROY ) {
-        PostQuitMessage(0);
+		PostQuitMessage(0);
 	}
 
 	if ( uMsg != WM_CREATE ) {
-	    return DefWindowProc(hWnd, uMsg, wParam, lParam);
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
 
-	const static PIXELFORMATDESCRIPTOR pfd = {
+	const PIXELFORMATDESCRIPTOR pfd = {
 		sizeof(PIXELFORMATDESCRIPTOR),
 		1,
 		PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
@@ -242,20 +242,20 @@ LONG WINAPI FakeWndProc (
 	HDC hDC;
 	HGLRC hGLRC;
 
-    hDC = GetDC(hWnd);
+	hDC = GetDC(hWnd);
 
-    // Set up OpenGL
-    pixelFormat = ChoosePixelFormat(hDC, &pfd);
-    SetPixelFormat(hDC, pixelFormat, &pfd);
-    hGLRC = qwglCreateContext(hDC);
-    qwglMakeCurrent(hDC, hGLRC);
+	// Set up OpenGL
+	pixelFormat = ChoosePixelFormat(hDC, &pfd);
+	SetPixelFormat(hDC, pixelFormat, &pfd);
+	hGLRC = qwglCreateContext(hDC);
+	qwglMakeCurrent(hDC, hGLRC);
 
 	// free things
-    wglMakeCurrent(NULL, NULL);
-    wglDeleteContext(hGLRC);
-    ReleaseDC(hWnd, hDC);
+	wglMakeCurrent(NULL, NULL);
+	wglDeleteContext(hGLRC);
+	ReleaseDC(hWnd, hDC);
 
-    return DefWindowProc(hWnd, uMsg, wParam, lParam);
+	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
 
@@ -296,32 +296,32 @@ GLW_GetWGLExtensionsWithFakeWindow
 */
 static void GLW_GetWGLExtensionsWithFakeWindow() {
 	HWND	hWnd;
-    MSG		msg;
+	MSG		msg;
 
-    // Create a window for the sole purpose of getting
+	// Create a window for the sole purpose of getting
 	// a valid context to get the wglextensions
-    hWnd = CreateWindow(WIN32_FAKE_WINDOW_CLASS_NAME, GAME_NAME,
-        WS_OVERLAPPEDWINDOW,
-        40, 40,
-        640,
-        480,
-        NULL, NULL, win32.hInstance, NULL );
-    if ( !hWnd ) {
-        common->FatalError( "GLW_GetWGLExtensionsWithFakeWindow: Couldn't create fake window" );
-    }
+	hWnd = CreateWindow(WIN32_FAKE_WINDOW_CLASS_NAME, GAME_NAME,
+		WS_OVERLAPPEDWINDOW,
+		40, 40,
+		640,
+		480,
+		NULL, NULL, win32.hInstance, NULL );
+	if ( !hWnd ) {
+		common->FatalError( "GLW_GetWGLExtensionsWithFakeWindow: Couldn't create fake window" );
+	}
 
-    HDC hDC = GetDC( hWnd );
+	HDC hDC = GetDC( hWnd );
 	HGLRC gRC = wglCreateContext( hDC );
 	wglMakeCurrent( hDC, gRC );
 	GLW_CheckWGLExtensions( hDC );
 	wglDeleteContext( gRC );
 	ReleaseDC( hWnd, hDC );
 
-    DestroyWindow( hWnd );
-    while ( GetMessage( &msg, NULL, 0, 0 ) ) {
-        TranslateMessage( &msg );
-        DispatchMessage( &msg );
-    }
+	DestroyWindow( hWnd );
+	while ( GetMessage( &msg, NULL, 0, 0 ) ) {
+		TranslateMessage( &msg );
+		DispatchMessage( &msg );
+	}
 }
 
 //=============================================================================
@@ -430,7 +430,7 @@ shown, and create the rendering context
 ====================
 */
 static bool GLW_InitDriver( glimpParms_t parms ) {
-    PIXELFORMATDESCRIPTOR src =
+	PIXELFORMATDESCRIPTOR src =
 	{
 		sizeof(PIXELFORMATDESCRIPTOR),	// size of this pfd
 		1,								// version number
@@ -450,7 +450,7 @@ static bool GLW_InitDriver( glimpParms_t parms ) {
 		PFD_MAIN_PLANE,					// main layer
 		0,								// reserved
 		0, 0, 0							// layer masks ignored
-    };
+	};
 
 	common->Printf( "Initializing OpenGL driver\n" );
 
@@ -1153,7 +1153,7 @@ static bool GLW_GetWindowDimensions( const glimpParms_t parms, int &x, int &y, i
 		r.top = 0;
 		r.right = parms.width;
 
-		AdjustWindowRect (&r, WINDOW_STYLE|WS_SYSMENU, FALSE);
+		AdjustWindowRect (&r, WINDOW_STYLE, FALSE);
 
 		w = r.right - r.left;
 		h = r.bottom - r.top;
@@ -1184,10 +1184,10 @@ static bool GLW_CreateWindow( glimpParms_t parms ) {
 	int				exstyle;
 	if ( parms.fullScreen != 0 ) {
 		exstyle = WS_EX_TOPMOST;
-		stylebits = WS_POPUP|WS_VISIBLE|WS_SYSMENU;
+		stylebits = WS_POPUP|WS_VISIBLE;
 	} else {
 		exstyle = 0;
-		stylebits = WINDOW_STYLE|WS_SYSMENU;
+		stylebits = WINDOW_STYLE;
 	}
 
 	win32.hWnd = CreateWindowEx (
@@ -1499,10 +1499,10 @@ bool GLimp_SetScreenParms( glimpParms_t parms ) {
 
 	if ( parms.fullScreen ) {
 		exstyle = WS_EX_TOPMOST;
-		stylebits = WS_POPUP|WS_VISIBLE|WS_SYSMENU;
+		stylebits = WS_POPUP|WS_VISIBLE;
 	} else {
 		exstyle = 0;
-		stylebits = WINDOW_STYLE|WS_SYSMENU;
+		stylebits = WINDOW_STYLE;
 	}
 
 	SetWindowLong( win32.hWnd, GWL_STYLE, stylebits );
@@ -1575,13 +1575,6 @@ void GLimp_Shutdown() {
 		//#modified-fva; END
 	}
 
-	// close the thread so the handle doesn't dangle
-	if ( win32.renderThreadHandle ) {
-		common->Printf( "...closing smp thread\n" );
-		CloseHandle( win32.renderThreadHandle );
-		win32.renderThreadHandle = NULL;
-	}
-
 	// restore gamma
 	GLimp_RestoreGamma();
 
@@ -1644,156 +1637,6 @@ void GLimp_DeactivateContext() {
 	}
 }
 
-/*
-===================
-GLimp_RenderThreadWrapper
-===================
-*/
-static void GLimp_RenderThreadWrapper() {
-	win32.glimpRenderThread();
-
-	// unbind the context before we die
-	qwglMakeCurrent( win32.hDC, NULL );
-}
-
-/*
-=======================
-GLimp_SpawnRenderThread
-
-Returns false if the system only has a single processor
-=======================
-*/
-bool GLimp_SpawnRenderThread( void (*function)() ) {
-	SYSTEM_INFO info;
-
-	// check number of processors
-	GetSystemInfo( &info );
-	if ( info.dwNumberOfProcessors < 2 ) {
-		return false;
-	}
-
-	// create the IPC elements
-	win32.renderCommandsEvent = CreateEvent( NULL, TRUE, FALSE, NULL );
-	win32.renderCompletedEvent = CreateEvent( NULL, TRUE, FALSE, NULL );
-	win32.renderActiveEvent = CreateEvent( NULL, TRUE, FALSE, NULL );
-
-	win32.glimpRenderThread = function;
-
-	win32.renderThreadHandle = CreateThread(
-	   NULL,	// LPSECURITY_ATTRIBUTES lpsa,
-	   0,		// DWORD cbStack,
-	   (LPTHREAD_START_ROUTINE)GLimp_RenderThreadWrapper,	// LPTHREAD_START_ROUTINE lpStartAddr,
-	   0,			// LPVOID lpvThreadParm,
-	   0,			//   DWORD fdwCreate,
-	   &win32.renderThreadId );
-
-	if ( !win32.renderThreadHandle ) {
-		common->Error( "GLimp_SpawnRenderThread: failed" );
-	}
-
-	SetThreadPriority( win32.renderThreadHandle, THREAD_PRIORITY_ABOVE_NORMAL );
-#if 0
-	// make sure they always run on different processors
-	SetThreadAffinityMask( GetCurrentThread, 1 );
-	SetThreadAffinityMask( win32.renderThreadHandle, 2 );
-#endif
-
-	return true;
-}
-
-
-//#define	DEBUG_PRINTS
-
-/*
-===================
-GLimp_BackEndSleep
-===================
-*/
-void *GLimp_BackEndSleep() {
-	void	*data;
-
-#ifdef DEBUG_PRINTS
-OutputDebugString( "-->GLimp_BackEndSleep\n" );
-#endif
-	ResetEvent( win32.renderActiveEvent );
-
-	// after this, the front end can exit GLimp_FrontEndSleep
-	SetEvent( win32.renderCompletedEvent );
-
-	WaitForSingleObject( win32.renderCommandsEvent, INFINITE );
-
-	ResetEvent( win32.renderCompletedEvent );
-	ResetEvent( win32.renderCommandsEvent );
-
-	data = win32.smpData;
-
-	// after this, the main thread can exit GLimp_WakeRenderer
-	SetEvent( win32.renderActiveEvent );
-
-#ifdef DEBUG_PRINTS
-OutputDebugString( "<--GLimp_BackEndSleep\n" );
-#endif
-	return data;
-}
-
-/*
-===================
-GLimp_FrontEndSleep
-===================
-*/
-void GLimp_FrontEndSleep() {
-#ifdef DEBUG_PRINTS
-OutputDebugString( "-->GLimp_FrontEndSleep\n" );
-#endif
-	WaitForSingleObject( win32.renderCompletedEvent, INFINITE );
-
-#ifdef DEBUG_PRINTS
-OutputDebugString( "<--GLimp_FrontEndSleep\n" );
-#endif
-}
-
-volatile bool	renderThreadActive;
-
-/*
-===================
-GLimp_WakeBackEnd
-===================
-*/
-void GLimp_WakeBackEnd( void *data ) {
-	int		r;
-
-#ifdef DEBUG_PRINTS
-OutputDebugString( "-->GLimp_WakeBackEnd\n" );
-#endif
-	win32.smpData = data;
-
-	if ( renderThreadActive ) {
-		common->FatalError( "GLimp_WakeBackEnd: already active" );
-	}
-
-	r = WaitForSingleObject( win32.renderActiveEvent, 0 );
-	if ( r == WAIT_OBJECT_0 ) {
-		common->FatalError( "GLimp_WakeBackEnd: already signaled" );
-	}
-
-	r = WaitForSingleObject( win32.renderCommandsEvent, 0 );
-	if ( r == WAIT_OBJECT_0 ) {
-		common->FatalError( "GLimp_WakeBackEnd: commands already signaled" );
-	}
-
-	// after this, the renderer can continue through GLimp_RendererSleep
-	SetEvent( win32.renderCommandsEvent );
-
-	r = WaitForSingleObject( win32.renderActiveEvent, 5000 );
-
-	if ( r == WAIT_TIMEOUT ) {
-		common->FatalError( "GLimp_WakeBackEnd: WAIT_TIMEOUT" );
-	}
-
-#ifdef DEBUG_PRINTS
-OutputDebugString( "<--GLimp_WakeBackEnd\n" );
-#endif
-}
 
 /*
 ===================

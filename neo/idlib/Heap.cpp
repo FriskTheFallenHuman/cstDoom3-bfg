@@ -42,11 +42,11 @@ If you have questions concerning this license or the applicable additional terms
 Mem_Alloc16
 ==================
 */
-void * Mem_Alloc16( const int size, const memTag_t tag ) {
+void * Mem_Alloc16( const size_t size, const memTag_t tag ) {
 	if ( !size ) {
 		return NULL;
 	}
-	const int paddedSize = ( size + 15 ) & ~15;
+	const size_t paddedSize = ( size + 15 ) & ~15;
 	return _aligned_malloc( paddedSize, 16 );
 }
 
@@ -67,7 +67,7 @@ void Mem_Free16( void *ptr ) {
 Mem_ClearedAlloc
 ==================
 */
-void * Mem_ClearedAlloc( const int size, const memTag_t tag ) {
+void * Mem_ClearedAlloc( const size_t size, const memTag_t tag ) {
 	void * mem = Mem_Alloc( size, tag );
 	SIMDProcessor->Memset( mem, 0, size );
 	return mem;
@@ -83,31 +83,3 @@ char *Mem_CopyString( const char *in ) {
 	strcpy( out, in );
 	return out;
 }
-
-//#modified-fva; BEGIN
-// Moved here to eliminate warning C4595: non-member operator new or delete functions may not be declared inline
-void *operator new(size_t s) {
-	return Mem_Alloc(s, TAG_NEW);
-}
-void operator delete(void *p) {
-	Mem_Free(p);
-}
-void *operator new[](size_t s) {
-	return Mem_Alloc(s, TAG_NEW);
-}
-void operator delete[](void *p) {
-	Mem_Free(p);
-}
-void *operator new(size_t s, memTag_t tag) {
-	return Mem_Alloc(s, tag);
-}
-void operator delete(void *p, memTag_t tag) {
-	Mem_Free(p);
-}
-void *operator new[](size_t s, memTag_t tag) {
-	return Mem_Alloc(s, tag);
-}
-void operator delete[](void *p, memTag_t tag) {
-	Mem_Free(p);
-}
-//#modified-fva; END

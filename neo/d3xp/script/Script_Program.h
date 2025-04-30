@@ -415,11 +415,19 @@ extern	idVarDef	def_boolean;
 
 typedef struct statement_s {
 	unsigned short	op;
+	unsigned short	flags; // DG: added this for ugly hacks
+	enum {
+		// op is OP_OBJECTCALL and when the statement was created the function/method
+		// implementation hasn't been parsed yet (only the declaration/prototype)
+		// see idCompiler::EmitFunctionParms() and idProgram::CalculateChecksum()
+		FLAG_OBJECTCALL_IMPL_NOT_PARSED_YET = 1,
+	};
+	// DG: moved linenumber and file up here to prevent wasting 8 bytes of padding on 64bit
+	unsigned short	linenumber;
+	unsigned short	file;
 	idVarDef		*a;
 	idVarDef		*b;
 	idVarDef		*c;
-	unsigned short	linenumber;
-	unsigned short	file;
 } statement_t;
 
 /***********************************************************************
@@ -459,6 +467,8 @@ private:
 	int											top_files;
 
 	void										CompileStats();
+	byte										*ReserveMem(int size);
+	idVarDef									*AllocVarDef(idTypeDef *type, const char *name, idVarDef *scope);
 
 public:
 	idVarDef									*returnDef;

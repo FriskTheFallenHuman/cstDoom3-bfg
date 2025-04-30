@@ -66,11 +66,11 @@ public:
 	bool IsValid() const { return handle > 0; }
 
 	void WriteToMsg( idBitMsg & msg ) {
-		msg.WriteLong( handle );
+		msg.WriteInt( handle );
 	}
 
 	void ReadFromMsg( const idBitMsg & msg ) {
-		handle = msg.ReadLong();
+		handle = msg.ReadInt();
 	}
 
 	void Serialize( idSerializer & ser );

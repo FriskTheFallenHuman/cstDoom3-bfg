@@ -38,7 +38,7 @@ typedef unsigned char *POINTER;
 typedef unsigned short int UINT2;
 
 /* UINT4 defines a four byte word */
-typedef unsigned long int UINT4;
+typedef unsigned int UINT4;
 
 /* MD4 context. */
 typedef struct {
@@ -86,10 +86,10 @@ static void Encode( unsigned char *output, UINT4 *input, unsigned int len ) {
 	unsigned int i, j;
 
 	for ( i = 0, j = 0; j < len; i++, j += 4 ) {
- 		output[j] = (unsigned char)(input[i] & 0xff);
- 		output[j+1] = (unsigned char)((input[i] >> 8) & 0xff);
- 		output[j+2] = (unsigned char)((input[i] >> 16) & 0xff);
- 		output[j+3] = (unsigned char)((input[i] >> 24) & 0xff);
+		output[j] = (unsigned char)(input[i] & 0xff);
+		output[j+1] = (unsigned char)((input[i] >> 8) & 0xff);
+		output[j+2] = (unsigned char)((input[i] >> 16) & 0xff);
+		output[j+3] = (unsigned char)((input[i] >> 24) & 0xff);
 	}
 }
 
@@ -98,7 +98,7 @@ static void Decode( UINT4 *output, const unsigned char *input, unsigned int len 
 	unsigned int i, j;
 
 	for ( i = 0, j = 0; j < len; i++, j += 4 ) {
- 		output[i] = ((UINT4)input[j]) | (((UINT4)input[j+1]) << 8) | (((UINT4)input[j+2]) << 16) | (((UINT4)input[j+3]) << 24);
+		output[i] = ((UINT4)input[j]) | (((UINT4)input[j+1]) << 8) | (((UINT4)input[j+2]) << 16) | (((UINT4)input[j+3]) << 24);
 	}
 }
 
@@ -200,16 +200,16 @@ void MD4_Update( MD4_CTX *context, const unsigned char *input, unsigned int inpu
 
 	/* Transform as many times as possible.*/
 	if ( inputLen >= partLen ) {
- 		memcpy((POINTER)&context->buffer[index], (POINTER)input, partLen);
- 		MD4_Transform (context->state, context->buffer);
+		memcpy((POINTER)&context->buffer[index], (POINTER)input, partLen);
+		MD4_Transform (context->state, context->buffer);
 
 		for ( i = partLen; i + 63 < inputLen; i += 64 ) {
- 			MD4_Transform (context->state, &input[i]);
+			MD4_Transform (context->state, &input[i]);
 		}
 
- 		index = 0;
+		index = 0;
 	} else {
- 		i = 0;
+		i = 0;
 	}
 
 	/* Buffer remaining input */
@@ -244,9 +244,9 @@ void MD4_Final( MD4_CTX *context, unsigned char digest[16] ) {
 MD4_BlockChecksum
 ===============
 */
-unsigned long MD4_BlockChecksum( const void *data, int length ) {
-	unsigned long	digest[4];
-	unsigned long	val;
+unsigned int MD4_BlockChecksum( const void *data, int length ) {
+	unsigned int	digest[4];
+	unsigned int	val;
 	MD4_CTX			ctx;
 
 	MD4_Init( &ctx );

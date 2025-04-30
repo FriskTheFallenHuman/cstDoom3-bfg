@@ -49,27 +49,25 @@ static const int MAX_TAGS = 256;
 
 
 
-void *		Mem_Alloc16( const int size, const memTag_t tag );
+void *		Mem_Alloc16( const size_t size, const memTag_t tag );
 void		Mem_Free16( void *ptr );
 
-ID_INLINE void *	Mem_Alloc( const int size, const memTag_t tag ) { return Mem_Alloc16( size, tag ); }
+ID_INLINE void *	Mem_Alloc( const size_t size, const memTag_t tag ) { return Mem_Alloc16( size, tag ); }
 ID_INLINE void		Mem_Free( void *ptr ) { Mem_Free16( ptr ); }
 
-void *		Mem_ClearedAlloc( const int size, const memTag_t tag );
+void *		Mem_ClearedAlloc( const size_t size, const memTag_t tag );
 char *		Mem_CopyString( const char *in );
 
-//#modified-fva; BEGIN
-/*
 ID_INLINE void *operator new( size_t s ) {
 	return Mem_Alloc( s, TAG_NEW );
 }
-ID_INLINE void operator delete( void *p ) {
+ID_INLINE void operator delete( void *p ) noexcept {
 	Mem_Free( p );
 }
 ID_INLINE void *operator new[]( size_t s ) {
 	return Mem_Alloc( s, TAG_NEW );
 }
-ID_INLINE void operator delete[]( void *p ) {
+ID_INLINE void operator delete[]( void *p ) noexcept {
 	Mem_Free( p );
 }
 ID_INLINE void *operator new( size_t s, memTag_t tag ) {
@@ -84,16 +82,6 @@ ID_INLINE void *operator new[]( size_t s, memTag_t tag ) {
 ID_INLINE void operator delete[]( void *p, memTag_t tag ) {
 	Mem_Free( p );
 }
-*/
-void *operator new(size_t s);
-void operator delete(void *p);
-void *operator new[](size_t s);
-void operator delete[](void *p);
-void *operator new(size_t s, memTag_t tag);
-void operator delete(void *p, memTag_t tag);
-void *operator new[](size_t s, memTag_t tag);
-void operator delete[](void *p, memTag_t tag);
-//#modified-fva; END
 
 // Define replacements for the PS3 library's aligned new operator.
 // Without these, allocations of objects with 32 byte or greater alignment
@@ -369,7 +357,7 @@ ID_INLINE void idBlockAlloc<_type_,_blockSize_,memTag>::AllocNewBlock() {
 	for ( int i = 0; i < _blockSize_; i++ ) {
 		block->elements[i].next = free;
 		free = &block->elements[i];
-		assert( ( ( (UINT_PTR)free ) & ( BLOCK_ALLOC_ALIGNMENT - 1 ) ) == 0 );
+		assert( ( ( (uintptr_t)free ) & ( BLOCK_ALLOC_ALIGNMENT - 1 ) ) == 0 );
 	}
 	total += _blockSize_;
 }

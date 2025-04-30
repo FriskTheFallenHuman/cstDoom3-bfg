@@ -167,7 +167,7 @@ public:
 	void	SerializeString( idStr & s )				{ SanityCheck(); if ( writing ) { msg->WriteString(s); } else { msg->ReadString( s ); } }
 	//void	SerializeString( idStrId & s )				{ SanityCheck(); if ( writing ) { msg->WriteString(s.GetKey()); } else { idStr key; msg->ReadString( key ); s.Set( key );} }
 
-	void	SerializeDelta( int32 & value, const int32 & base ) { SanityCheck(); if ( writing ) { msg->WriteDeltaLong( base, value ); } else { value = msg->ReadDeltaLong( base ); } }
+	void	SerializeDelta( int32 & value, const int32 & base ) { SanityCheck(); if ( writing ) { msg->WriteDeltaLong( base, value ); } else { value = msg->ReadDeltaInt( base ); } }
 	void	SerializeDelta( int16 & value, const int16 & base ) { SanityCheck(); if ( writing ) { msg->WriteDeltaShort( base, value ); } else { value = msg->ReadDeltaShort( base ); } }
 	void	SerializeDelta( int8 & value, const int8 & base ) { SanityCheck(); if ( writing ) { msg->WriteDeltaChar( base, value ); } else { value = msg->ReadDeltaChar( base ); } }
 
@@ -178,17 +178,17 @@ public:
 
 
 	// Common types, no compression
-	void	Serialize( int64 & value )		{ SanityCheck(); if ( writing ) { msg->WriteLongLong(value); }		else { value = msg->ReadLongLong(); } }
-	void	Serialize( uint64 & value )		{ SanityCheck(); if ( writing ) { msg->WriteLongLong(value); }		else { value = msg->ReadLongLong(); } }
-	void	Serialize( int32 & value )		{ SanityCheck(); if ( writing ) { msg->WriteLong(value); }			else { value = msg->ReadLong(); } }
-	void	Serialize( uint32 & value )		{ SanityCheck(); if ( writing ) { msg->WriteLong(value); }			else { value = msg->ReadLong(); } }
+	void	Serialize( int64 & value )		{ SanityCheck(); if ( writing ) { msg->WriteInt64(value); }		else { value = msg->ReadInt64(); } }
+	void	Serialize( uint64 & value )		{ SanityCheck(); if ( writing ) { msg->WriteInt64(value); }		else { value = msg->ReadInt64(); } }
+	void	Serialize( int32 & value )		{ SanityCheck(); if ( writing ) { msg->WriteInt(value); }			else { value = msg->ReadInt(); } }
+	void	Serialize( uint32 & value )		{ SanityCheck(); if ( writing ) { msg->WriteInt(value); }			else { value = msg->ReadInt(); } }
 	void	Serialize( int16 & value )		{ SanityCheck(); if ( writing ) { msg->WriteShort(value); }			else { value = msg->ReadShort(); } }
 	void	Serialize( uint16 & value )		{ SanityCheck(); if ( writing ) { msg->WriteUShort(value); }		else { value = msg->ReadUShort(); } }
 	void	Serialize( uint8 & value )		{ SanityCheck(); if ( writing ) { msg->WriteByte(value); }			else { value = msg->ReadByte(); } }
 	void	Serialize( int8 & value )		{ SanityCheck(); if ( writing ) { msg->WriteChar(value); }			else { value = msg->ReadChar(); } }
 	void	Serialize( bool & value )		{ SanityCheck(); if ( writing ) { msg->WriteByte(value?1:0); }		else { value = msg->ReadByte() != 0; } }
 	void	Serialize( float & value )		{ SanityCheck(); if ( writing ) { msg->WriteFloat(value); }			else { value = msg->ReadFloat(); } }
-	void	Serialize( idRandom2 & value )	{ SanityCheck(); if ( writing ) { msg->WriteLong(value.GetSeed()); } else { value.SetSeed( msg->ReadLong() ); } }
+	void	Serialize( idRandom2 & value )	{ SanityCheck(); if ( writing ) { msg->WriteInt(value.GetSeed()); } else { value.SetSeed( msg->ReadInt() ); } }
 	void	Serialize( idVec3 & value )		{ SanityCheck(); if ( writing ) { msg->WriteVectorFloat(value); }	else { msg->ReadVectorFloat(value); } }
 	void	Serialize( idVec2 & value )		{ SanityCheck(); if ( writing ) { msg->WriteVectorFloat(value); }	else { msg->ReadVectorFloat(value); } }
 	void	Serialize( idVec6 & value )		{ SanityCheck(); if ( writing ) { msg->WriteVectorFloat(value); }	else { msg->ReadVectorFloat(value); } }

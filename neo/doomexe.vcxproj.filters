@@ -803,9 +803,6 @@
     <ClCompile Include="sys\win32\win_syscon.cpp">
       <Filter>Sys\Win32</Filter>
     </ClCompile>
-    <ClCompile Include="sys\win32\win_taskkeyhook.cpp">
-      <Filter>Sys\Win32</Filter>
-    </ClCompile>
     <ClCompile Include="sys\sys_savegame.cpp">
       <Filter>Sys</Filter>
     </ClCompile>

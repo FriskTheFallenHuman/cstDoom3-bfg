@@ -1333,7 +1333,7 @@ typedef struct operator_s
 
 typedef struct value_s
 {
-	signed long int intvalue;
+	int intvalue;
 	double floatvalue;
 	int parentheses;
 	struct value_s *prev, *next;
@@ -1404,7 +1404,7 @@ int PC_OperatorPriority(int op) {
 
 #define FreeOperator(op)
 
-int idParser::EvaluateTokens( idToken *tokens, signed long int *intvalue, double *floatvalue, int integer ) {
+int idParser::EvaluateTokens( idToken *tokens, int *intvalue, double *floatvalue, int integer ) {
 	operator_t *o, *firstoperator, *lastoperator;
 	value_t *v, *firstvalue, *lastvalue, *v1, *v2;
 	idToken *t;
@@ -1829,7 +1829,7 @@ int idParser::EvaluateTokens( idToken *tokens, signed long int *intvalue, double
 idParser::Evaluate
 ================
 */
-int idParser::Evaluate( signed long int *intvalue, double *floatvalue, int integer ) {
+int idParser::Evaluate( int *intvalue, double *floatvalue, int integer ) {
 	idToken token, *firsttoken, *lasttoken;
 	idToken *t, *nexttoken;
 	define_t *define;
@@ -1920,7 +1920,7 @@ int idParser::Evaluate( signed long int *intvalue, double *floatvalue, int integ
 idParser::DollarEvaluate
 ================
 */
-int idParser::DollarEvaluate( signed long int *intvalue, double *floatvalue, int integer) {
+int idParser::DollarEvaluate( int *intvalue, double *floatvalue, int integer) {
 	int indent, defined = false;
 	idToken token, *firsttoken, *lasttoken;
 	idToken *t, *nexttoken;
@@ -2022,7 +2022,7 @@ idParser::Directive_elif
 ================
 */
 int idParser::Directive_elif() {
-	signed long int value;
+	int value;
 	int type, skip;
 
 	idParser::PopIndent( &type, &skip );
@@ -2044,7 +2044,7 @@ idParser::Directive_if
 ================
 */
 int idParser::Directive_if() {
-	signed long int value;
+	int value;
 	int skip;
 
 	if ( !idParser::Evaluate( &value, NULL, true ) ) {
@@ -2140,7 +2140,7 @@ idParser::Directive_eval
 ================
 */
 int idParser::Directive_eval() {
-	signed long int value;
+	int value;
 	idToken token;
 	char buf[128];
 
@@ -2279,7 +2279,7 @@ idParser::DollarDirective_evalint
 ================
 */
 int idParser::DollarDirective_evalint() {
-	signed long int value;
+	int value;
 	idToken token;
 	char buf[128];
 
@@ -2328,7 +2328,7 @@ int idParser::DollarDirective_evalfloat() {
 	token = buf;
 	token.type = TT_NUMBER;
 	token.subtype = TT_FLOAT | TT_LONG | TT_DECIMAL | TT_VALUESVALID;
-	token.intvalue = (unsigned long) fabs( value );
+	token.intvalue = (unsigned int) fabs( value );
 	token.floatvalue = fabs( value );
 	idParser::UnreadSourceToken( &token );
 	if ( value < 0 ) {

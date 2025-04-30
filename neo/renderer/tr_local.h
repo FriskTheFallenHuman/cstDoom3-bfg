@@ -630,8 +630,8 @@ struct glstate_t {
 	int					faceCulling;
 
 	vertexLayoutType_t	vertexLayout;
-	unsigned int		currentVertexBuffer;
-	unsigned int		currentIndexBuffer;
+	uintptr_t			currentVertexBuffer;
+	uintptr_t			currentIndexBuffer;
 
 	float				polyOfsScale;
 	float				polyOfsBias;
@@ -1077,14 +1077,7 @@ void		GLimp_SetGamma( unsigned short red[256],
 // These are now taken as 16 bit values, so we can take full advantage
 // of dacs with >8 bits of precision
 
-
-bool		GLimp_SpawnRenderThread( void (*function)() );
 // Returns false if the system only has a single processor
-
-void *		GLimp_BackEndSleep();
-void		GLimp_FrontEndSleep();
-void		GLimp_WakeBackEnd( void *data );
-// these functions implement the dual processor syncronization
 
 void		GLimp_ActivateContext();
 void		GLimp_DeactivateContext();

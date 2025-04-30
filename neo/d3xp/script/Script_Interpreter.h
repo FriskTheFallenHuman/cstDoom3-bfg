@@ -30,7 +30,7 @@ If you have questions concerning this license or the applicable additional terms
 #define __SCRIPT_INTERPRETER_H__
 
 #define MAX_STACK_DEPTH 	64
-#define LOCALSTACK_SIZE 	6144
+#define LOCALSTACK_SIZE 	(6144 * 2)
 
 typedef struct prstack_s {
 	int 				s;
@@ -60,7 +60,8 @@ private:
 
 	void				PopParms( int numParms );
 	void				PushString( const char *string );
-	void				Push( int value );
+	void				PushVector( const idVec3 &vector );
+	void				Push( intptr_t value );
 	const char			*FloatToString( float value );
 	void				AppendString( idVarDef *def, const char *from );
 	void				SetString( idVarDef *def, const char *from );
@@ -135,12 +136,44 @@ ID_INLINE void idInterpreter::PopParms( int numParms ) {
 idInterpreter::Push
 ====================
 */
-ID_INLINE void idInterpreter::Push( int value ) {
-	if ( localstackUsed + sizeof( int ) > LOCALSTACK_SIZE ) {
+ID_INLINE void idInterpreter::Push( intptr_t value ) {
+	if ( localstackUsed + sizeof( intptr_t ) > LOCALSTACK_SIZE ) {
 		Error( "Push: locals stack overflow\n" );
 	}
-	*( int * )&localstack[ localstackUsed ]	= value;
-	localstackUsed += sizeof( int );
+	// DG: fix for 64bit Big Endian machines
+	//*( intptr_t * )&localstack[ localstackUsed ]	= value;
+	int val = value;
+	assert(value == val && "I really assumed that value would always fit into 32bit");
+	// dhewm3 used to store these values on localstack[] as intptr_t, even though
+	// they always seem to be int32. Unfortunately, all the code reading localstack[]
+	// gets the pointer to &localstack[ localstackUsed ] and then interprets that
+	// as int* or float* or whatever.
+	// So with 64bit machines it's stored as the wrong size (intptr_t is int64, int is int32),
+	// and on Big Endian the values are just 0 (or UINT_MAX if value < 0) - on Little Endian
+	// the first 4 bytes are the ones with actual data so the bug was hidden).
+	// To fix this, now a regular itn is stored at `&localstack[ localstackUsed ]`,
+	// as expected by the code using localstack[].
+	// TODO: once this has been tested more (and the assertion above has never triggered),
+	//       change idInterpreter::Push() to take a regular int argument instead of intptr_t.
+	int *stackVar = ( int * )&localstack[ localstackUsed ];
+	*stackVar = val;
+
+	// even though a 32bit int is put onto the stack, increase it by sizeof(intptr_t)
+	// so it remains aligned to multiples of the native pointer size
+	localstackUsed += sizeof( intptr_t );
+}
+
+/*
+====================
+idInterpreter::PushVector
+====================
+*/
+ID_INLINE void idInterpreter::PushVector( const idVec3 &vector ) {
+	if ( localstackUsed + E_EVENT_SIZEOF_VEC > LOCALSTACK_SIZE ) {
+		Error( "Push: locals stack overflow\n" );
+	}
+	*( idVec3 * )&localstack[ localstackUsed ] = vector;
+	localstackUsed += E_EVENT_SIZEOF_VEC;
 }
 
 /*

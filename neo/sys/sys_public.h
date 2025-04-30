@@ -41,37 +41,13 @@ If you have questions concerning this license or the applicable additional terms
 
 enum cpuid_t {
 	CPUID_NONE							= 0x00000,
-	CPUID_UNSUPPORTED					= 0x00001,	// unsupported (386/486)
-	CPUID_GENERIC						= 0x00002,	// unrecognized processor
-	CPUID_INTEL							= 0x00004,	// Intel
-	CPUID_AMD							= 0x00008,	// AMD
-	CPUID_MMX							= 0x00010,	// Multi Media Extensions
-	CPUID_3DNOW							= 0x00020,	// 3DNow!
-	CPUID_SSE							= 0x00040,	// Streaming SIMD Extensions
-	CPUID_SSE2							= 0x00080,	// Streaming SIMD Extensions 2
-	CPUID_SSE3							= 0x00100,	// Streaming SIMD Extentions 3 aka Prescott's New Instructions
-	CPUID_ALTIVEC						= 0x00200,	// AltiVec
-	CPUID_HTT							= 0x01000,	// Hyper-Threading Technology
-	CPUID_CMOV							= 0x02000,	// Conditional Move (CMOV) and fast floating point comparison (FCOMI) instructions
-	CPUID_FTZ							= 0x04000,	// Flush-To-Zero mode (denormal results are flushed to zero)
-	CPUID_DAZ							= 0x08000,	// Denormals-Are-Zero mode (denormal source operands are set to zero)
-	CPUID_XENON							= 0x10000,	// Xbox 360
-	CPUID_CELL							= 0x20000	// PS3
-};
-
-enum fpuExceptions_t {
-	FPU_EXCEPTION_INVALID_OPERATION		= 1,
-	FPU_EXCEPTION_DENORMALIZED_OPERAND	= 2,
-	FPU_EXCEPTION_DIVIDE_BY_ZERO		= 4,
-	FPU_EXCEPTION_NUMERIC_OVERFLOW		= 8,
-	FPU_EXCEPTION_NUMERIC_UNDERFLOW		= 16,
-	FPU_EXCEPTION_INEXACT_RESULT		= 32
-};
-
-enum fpuPrecision_t {
-	FPU_PRECISION_SINGLE				= 0,
-	FPU_PRECISION_DOUBLE				= 1,
-	FPU_PRECISION_DOUBLE_EXTENDED		= 2
+	CPUID_GENERIC						= 0x00001,	// unrecognized processor
+	CPUID_INTEL							= 0x00002,	// Intel
+	CPUID_AMD							= 0x00004,	// AMD
+	CPUID_MMX							= 0x00008,	// Multi Media Extensions
+	CPUID_SSE							= 0x00010,	// Streaming SIMD Extensions
+	CPUID_FTZ							= 0x00020,	// Flush-To-Zero mode (denormal results are flushed to zero)
+	CPUID_DAZ							= 0x00040,	// Denormals-Are-Zero mode (denormal source operands are set to zero)
 };
 
 enum fpuRounding_t {
@@ -384,19 +360,6 @@ struct sysEvent_t {
 	int				GetYCoord() const { return evValue2; }
 };
 
-struct sysMemoryStats_t {
-	int memoryLoad;
-	int totalPhysical;
-	int availPhysical;
-	int totalPageFile;
-	int availPageFile;
-	int totalVirtual;
-	int availVirtual;
-	int availExtendedVirtual;
-};
-
-typedef unsigned long address_t;
-
 void			Sys_Init();
 void			Sys_Shutdown();
 void			Sys_Error( const char *error, ...);
@@ -447,24 +410,6 @@ double			Sys_ClockTicksPerSecond();
 cpuid_t			Sys_GetProcessorId();
 const char *	Sys_GetProcessorString();
 
-// returns true if the FPU stack is empty
-bool			Sys_FPU_StackIsEmpty();
-
-// empties the FPU stack
-void			Sys_FPU_ClearStack();
-
-// returns the FPU state as a string
-const char *	Sys_FPU_GetState();
-
-// enables the given FPU exceptions
-void			Sys_FPU_EnableExceptions( int exceptions );
-
-// sets the FPU precision
-void			Sys_FPU_SetPrecision( int precision );
-
-// sets the FPU rounding mode
-void			Sys_FPU_SetRounding( int rounding );
-
 // sets Flush-To-Zero mode (only available when CPUID_FTZ is set)
 void			Sys_FPU_SetFTZ( bool enable );
 
@@ -483,10 +428,6 @@ int				Sys_GetDriveFreeSpace( const char *path );
 // returns amount of drive space in path in bytes
 int64			Sys_GetDriveFreeSpaceInBytes( const char * path );
 
-// returns memory stats
-void			Sys_GetCurrentMemoryStatus( sysMemoryStats_t &stats );
-void			Sys_GetExeLaunchMemoryStatus( sysMemoryStats_t &stats );
-
 // lock and unlock memory
 bool			Sys_LockMemory( void *ptr, int bytes );
 bool			Sys_UnlockMemory( void *ptr, int bytes );
@@ -494,17 +435,10 @@ bool			Sys_UnlockMemory( void *ptr, int bytes );
 // set amount of physical work memory
 void			Sys_SetPhysicalWorkMemory( int minBytes, int maxBytes );
 
-// allows retrieving the call stack at execution points
-void			Sys_GetCallStack( address_t *callStack, const int callStackSize );
-const char *	Sys_GetCallStackStr( const address_t *callStack, const int callStackSize );
-const char *	Sys_GetCallStackCurStr( int depth );
-const char *	Sys_GetCallStackCurAddressStr( int depth );
-void			Sys_ShutdownSymbols();
-
 // DLL loading, the path should be a fully qualified OS path to the DLL file to be loaded
-int				Sys_DLL_Load( const char *dllName );
-void *			Sys_DLL_GetProcAddress( int dllHandle, const char *procName );
-void			Sys_DLL_Unload( int dllHandle );
+uintptr_t		Sys_DLL_Load( const char *dllName );
+void *			Sys_DLL_GetProcAddress( uintptr_t dllHandle, const char *procName );
+void			Sys_DLL_Unload( uintptr_t dllHandle );
 
 // event generation
 void			Sys_GenerateEvents();
@@ -701,24 +635,16 @@ public:
 	virtual double			ClockTicksPerSecond() = 0;
 	virtual cpuid_t			GetProcessorId() = 0;
 	virtual const char *	GetProcessorString() = 0;
-	virtual const char *	FPU_GetState() = 0;
-	virtual bool			FPU_StackIsEmpty() = 0;
+
 	virtual void			FPU_SetFTZ( bool enable ) = 0;
 	virtual void			FPU_SetDAZ( bool enable ) = 0;
-
-	virtual void			FPU_EnableExceptions( int exceptions ) = 0;
 
 	virtual bool			LockMemory( void *ptr, int bytes ) = 0;
 	virtual bool			UnlockMemory( void *ptr, int bytes ) = 0;
 
-	virtual void			GetCallStack( address_t *callStack, const int callStackSize ) = 0;
-	virtual const char *	GetCallStackStr( const address_t *callStack, const int callStackSize ) = 0;
-	virtual const char *	GetCallStackCurStr( int depth ) = 0;
-	virtual void			ShutdownSymbols() = 0;
-
-	virtual int				DLL_Load( const char *dllName ) = 0;
-	virtual void *			DLL_GetProcAddress( int dllHandle, const char *procName ) = 0;
-	virtual void			DLL_Unload( int dllHandle ) = 0;
+	virtual uintptr_t		DLL_Load( const char *dllName ) = 0;
+	virtual void *			DLL_GetProcAddress( uintptr_t dllHandle, const char *procName ) = 0;
+	virtual void			DLL_Unload( uintptr_t dllHandle ) = 0;
 	virtual void			DLL_GetFileName( const char *baseName, char *dllName, int maxLength ) = 0;
 
 	virtual sysEvent_t		GenerateMouseButtonEvent( int button, bool down ) = 0;
@@ -729,9 +655,5 @@ public:
 };
 
 extern idSys *				sys;
-
-bool Sys_LoadOpenAL();
-void Sys_FreeOpenAL();
-
 
 #endif /* !__SYS_PUBLIC__ */

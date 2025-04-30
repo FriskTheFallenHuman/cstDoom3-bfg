@@ -103,11 +103,11 @@ struct netVersion_s {
 NetGetVersionChecksum
 ========================
 */
-unsigned long NetGetVersionChecksum() {
+unsigned int NetGetVersionChecksum() {
 #if 0
 	return idStr( com_version.GetString() ).Hash();
 #else
-	unsigned long ret = 0;
+	unsigned int ret = 0;
 
 	CRC32_InitChecksum( ret );
 	CRC32_UpdateChecksum( ret, netVersion.string, idStr::Length( netVersion.string ) );
@@ -2767,7 +2767,7 @@ idSessionLocal::WriteLeaderboardToMsg
 void idSessionLocal::WriteLeaderboardToMsg( idBitMsg & msg, const leaderboardDefinition_t * leaderboard, const column_t * stats ) {
 	assert( Sys_FindLeaderboardDef( leaderboard->id ) == leaderboard );
 
-	msg.WriteLong( leaderboard->id );
+	msg.WriteInt( leaderboard->id );
 
 	for ( int i = 0; i < leaderboard->numColumns; ++i ) {
 		uint64 value = stats[i].value;
@@ -2788,7 +2788,7 @@ idSessionLocal::ReadLeaderboardFromMsg
 ========================
 */
 const leaderboardDefinition_t * idSessionLocal::ReadLeaderboardFromMsg( idBitMsg & msg, column_t * stats ) {
-	int id = msg.ReadLong();
+	int id = msg.ReadInt();
 
 	const leaderboardDefinition_t * leaderboard = Sys_FindLeaderboardDef( id );
 
@@ -3415,7 +3415,7 @@ void idSessionLocal::UpdateMasterUserHeadsetState()
 	if ( voiceChanged ) {
 		byte buffer[ idPacketProcessor::MAX_MSG_SIZE ];
 		idBitMsg msg( buffer, sizeof( buffer ) );
-		msg.WriteLong( 1 );
+		msg.WriteInt( 1 );
 		user->lobbyUserID.WriteToMsg( msg );
 		msg.WriteBool( voiceChat->GetHeadsetState( talkerIndex ) );
 
@@ -3998,11 +3998,11 @@ void idSessionLocal::ListServersCommon() {
 	idBitMsg msg( buffer, sizeof( buffer ) );
 
 	// Add the current version info to the query
-	const unsigned long localChecksum = NetGetVersionChecksum();
+	const unsigned int localChecksum = NetGetVersionChecksum();
 
 	NET_VERBOSE_PRINT( "ListServers: Hash checksum: %i, broadcasting to: %s\n", localChecksum, address.ToString() );
 
-	msg.WriteLong( localChecksum );
+	msg.WriteInt( localChecksum );
 
 	GetPort();
 	// Send the query as a broadcast
@@ -4019,8 +4019,8 @@ void idSessionLocal::HandleDedicatedServerQueryRequest( lobbyAddress_t & remoteA
 
 	bool canJoin = true;
 
-	const unsigned long localChecksum = NetGetVersionChecksum();
-	const unsigned long remoteChecksum = msg.ReadLong();
+	const unsigned int localChecksum = NetGetVersionChecksum();
+	const unsigned int remoteChecksum = msg.ReadInt();
 
 	if ( remoteChecksum != localChecksum ) {
 		NET_VERBOSE_PRINT( "HandleServerQueryRequest: Invalid version from %s\n", remoteAddr.ToString() );

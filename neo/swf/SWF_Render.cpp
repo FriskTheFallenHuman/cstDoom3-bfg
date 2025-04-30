@@ -467,8 +467,8 @@ void idSWF::RenderMorphShape( idRenderSystem * gui, const idSWFShape * shape, co
 		if ( ( color.mul.w + color.add.w ) <= ALPHA_EPSILON ) {
 			continue;
 		}
-		uint32 packedColorM = LittleLong( PackColor( color.mul ) );
-		uint32 packedColorA = LittleLong( PackColor( ( color.add * 0.5f ) + idVec4( 0.5f ) ) ); // Compress from -1..1 to 0..1
+		uint32 packedColorM = LittleInt( PackColor( color.mul ) );
+		uint32 packedColorA = LittleInt( PackColor( ( color.add * 0.5f ) + idVec4( 0.5f ) ) ); // Compress from -1..1 to 0..1
 
 		swfRect_t bounds;
 		bounds.tl = Lerp( shape->startBounds.tl, shape->endBounds.tl, renderState.ratio );
@@ -578,8 +578,8 @@ void idSWF::RenderShape( idRenderSystem * gui, const idSWFShape * shape, const s
 			continue;
 		}
 
-		uint32 packedColorM = LittleLong( PackColor( color.mul ) );
-		uint32 packedColorA = LittleLong( PackColor( ( color.add * 0.5f ) + idVec4( 0.5f ) ) ); // Compress from -1..1 to 0..1
+		uint32 packedColorM = LittleInt( PackColor( color.mul ) );
+		uint32 packedColorA = LittleInt( PackColor( ( color.add * 0.5f ) + idVec4( 0.5f ) ) ); // Compress from -1..1 to 0..1
 
 		const swfRect_t & bounds = shape->startBounds;
 		if ( renderState.materialWidth > 0 ) {
@@ -651,8 +651,8 @@ void idSWF::RenderShape( idRenderSystem * gui, const idSWFShape * shape, const s
 		if ( ( color.mul.w + color.add.w ) <= ALPHA_EPSILON ) {
 			continue;
 		}
-		uint32 packedColorM = LittleLong( PackColor( color.mul ) );
-		uint32 packedColorA = LittleLong( PackColor( ( color.add * 0.5f ) + idVec4( 0.5f ) ) ); // Compress from -1..1 to 0..1
+		uint32 packedColorM = LittleInt( PackColor( color.mul ) );
+		uint32 packedColorA = LittleInt( PackColor( ( color.add * 0.5f ) + idVec4( 0.5f ) ) ); // Compress from -1..1 to 0..1
 
 		gui->SetGLState( GLStateForRenderState( renderState ) | GLS_POLYMODE_LINE );
 
