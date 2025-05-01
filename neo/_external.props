@@ -8,13 +8,9 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions>_BIND_TO_CURRENT_CRT_VERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)_libs\libpng;$(SolutionDir)_libs\jpeg-6;$(SolutionDir)_libs\libtheora\include;$(SolutionDir)_libs\libtheora\lib;$(SolutionDir)_libs\libogg\include;$(SolutionDir)_libs\libbinkdec\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)_libs\jpeg-6;$(SolutionDir)_libs\libtheora\include;$(SolutionDir)_libs\libtheora\lib;$(SolutionDir)_libs\libogg\include;$(SolutionDir)_libs\libbinkdec\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4244;4267;4057;4100;4245;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
-    <PreBuildEvent>
-      <Command>copy /y $(SolutionDir)_libs\libpng\scripts\pnglibconf.h.prebuilt $(SolutionDir)_libs\libpng\pnglibconf.h</Command>
-      <Message>Generating pnglibconf.h</Message>
-    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)' == 'Win32'">
     <ClCompile>

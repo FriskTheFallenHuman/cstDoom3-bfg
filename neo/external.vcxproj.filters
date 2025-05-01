@@ -19,9 +19,6 @@
     <Filter Include="timidity">
       <UniqueIdentifier>{ba2d93ef-de29-43a0-af7f-b2e38395519e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="png">
-      <UniqueIdentifier>{c70bc856-6033-4e36-a707-9ef0ba26d84c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="_libs\jpeg-6\jcapimin.cpp">
@@ -381,51 +378,6 @@
     <ClCompile Include="_libs\timidity\timidity.cpp">
       <Filter>timidity</Filter>
     </ClCompile>
-    <ClCompile Include="_libs\libpng\png.c">
-      <Filter>png</Filter>
-    </ClCompile>
-    <ClCompile Include="_libs\libpng\pngerror.c">
-      <Filter>png</Filter>
-    </ClCompile>
-    <ClCompile Include="_libs\libpng\pngget.c">
-      <Filter>png</Filter>
-    </ClCompile>
-    <ClCompile Include="_libs\libpng\pngmem.c">
-      <Filter>png</Filter>
-    </ClCompile>
-    <ClCompile Include="_libs\libpng\pngpread.c">
-      <Filter>png</Filter>
-    </ClCompile>
-    <ClCompile Include="_libs\libpng\pngread.c">
-      <Filter>png</Filter>
-    </ClCompile>
-    <ClCompile Include="_libs\libpng\pngrio.c">
-      <Filter>png</Filter>
-    </ClCompile>
-    <ClCompile Include="_libs\libpng\pngrtran.c">
-      <Filter>png</Filter>
-    </ClCompile>
-    <ClCompile Include="_libs\libpng\pngrutil.c">
-      <Filter>png</Filter>
-    </ClCompile>
-    <ClCompile Include="_libs\libpng\pngset.c">
-      <Filter>png</Filter>
-    </ClCompile>
-    <ClCompile Include="_libs\libpng\pngtrans.c">
-      <Filter>png</Filter>
-    </ClCompile>
-    <ClCompile Include="_libs\libpng\pngwio.c">
-      <Filter>png</Filter>
-    </ClCompile>
-    <ClCompile Include="_libs\libpng\pngwrite.c">
-      <Filter>png</Filter>
-    </ClCompile>
-    <ClCompile Include="_libs\libpng\pngwtran.c">
-      <Filter>png</Filter>
-    </ClCompile>
-    <ClCompile Include="_libs\libpng\pngwutil.c">
-      <Filter>png</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="_libs\jpeg-6\jchuff.h">
@@ -622,10 +574,5 @@
     <None Include="_libs\libogg\win32\ogg.def">
       <Filter>ogg</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="_libs\libpng\scripts\pngwin.rc">
-      <Filter>png</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>
