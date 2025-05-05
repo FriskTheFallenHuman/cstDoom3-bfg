@@ -2661,16 +2661,7 @@ ec373afdb6c4ebb8c66f261a6fe04fe4 *neo\_Release.props
 e698dcd1caaa0c02bffe01d7358004a6 *neo\_WithMemoryLog.props
 b35cda9308b788e78a75083f959077dd *neo\__CstCommon.props
 ee97bd364d454ae4a02f8eb9fce6884f *neo\__cst_doomexe.manifest
-6489a09ab4349d18833077e254c82df0 *theora_enc\common\theora_encoder.cpp
-c590ae4d85400ac25983e38217684d46 *theora_enc\common\theora_encoder.h
-bced1dd3c3cef1b10004599ec97ca987 *theora_enc\common\utils.cpp
-e1d8b6040613e7aa7d57b480effdc6f0 *theora_enc\common\utils.h
-d3a405d142b4e01807ed6419f1f2d926 *theora_enc\conv_cmd\main.cpp
-c6bca8146c3ece3640111d74a0725eec *theora_enc\theora_enc.vcxproj
-748069d050a7bd65477d503f4be88fed *theora_enc\theora_enc.vcxproj.filters
 51aa12ed1ffe0b62c47c62d57ff9589c *cc-by-4.0.txt
 b78e655d93e491202e08c4604207da87 *COPYING.txt
-7f2ec83555e153129edd54a9d83ce93d *utils.COPYING.txt
 8d28d058efd1ad4c791e383c33c97023 *id.README.txt
 a4d6ce7746ae25bef9f7a158f8a898cd *README.txt
-1f4e0a7359984d716176cca57af6d80e *theora_enc.README.txt
