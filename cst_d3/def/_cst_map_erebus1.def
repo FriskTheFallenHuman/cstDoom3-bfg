@@ -1,0 +1,8 @@
+//#modified-fva; BEGIN
+entityDef cst_erebus1_chainsaw_1 {
+	"inherit"	"weapon_chainsaw"
+	"name"		"cst_weapon_chainsaw_1"
+	"origin"	"4280 6970 385"
+	"rotation"	"0.94 -0.34 0 0.34 0.94 0 0 0 1"  // ang "0 -20 0"
+}
+//#modified-fva; END

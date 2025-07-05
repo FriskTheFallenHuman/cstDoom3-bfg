@@ -1,0 +1,182 @@
+/***********************************************************************
+
+weapon_pistol.script
+
+***********************************************************************/
+
+#define PISTOL_FIRERATE			0.4
+#define PISTOL_LOWAMMO			4
+#define PISTOL_NUMPROJECTILES	1
+
+// blend times
+#define PISTOL_IDLE_TO_LOWER	2
+#define PISTOL_IDLE_TO_FIRE		1
+#define	PISTOL_IDLE_TO_RELOAD	3
+#define PISTOL_RAISE_TO_IDLE	3
+#define PISTOL_FIRE_TO_IDLE		4
+#define PISTOL_RELOAD_TO_IDLE	4
+
+object weapon_pistol : weapon_base {
+	//#modified-fva; BEGIN
+	float		cstReloaded;
+	//#modified-fva; END
+	float		next_attack;
+	float		spread;
+	
+	void		init();
+	
+	void		Lower();
+	void		Raise();
+	void		Idle();
+	void		Fire();
+	void		Reload();
+	void		ExitCinematic();
+};
+
+void weapon_pistol::init() {
+	//#modified-fva; BEGIN
+	cstReloaded = false;
+	//#modified-fva; END
+	next_attack = 0;
+	spread		= getFloatKey( "spread" );
+	weaponState( "Raise", 0 );
+}
+
+void weapon_pistol::Raise() {
+	weaponRising();
+	playAnim( ANIMCHANNEL_ALL, "raise" );
+	waitUntil( animDone( ANIMCHANNEL_ALL, PISTOL_RAISE_TO_IDLE ) );
+	weaponState( "Idle", PISTOL_RAISE_TO_IDLE );
+}
+
+void weapon_pistol::Lower() {
+	weaponLowering();
+	playAnim( ANIMCHANNEL_ALL, "putaway" );
+	waitUntil( animDone( ANIMCHANNEL_ALL, 0 ) );
+	weaponHolstered();
+	waitUntil( WEAPON_RAISEWEAPON );
+	weaponState( "Raise", 0 );
+}
+
+void weapon_pistol::Idle() {
+	float currentTime;
+	float ammoClip;
+	float avail;
+	float clip_size;
+	
+	clip_size = clipSize();	
+	
+	weaponReady();
+	//#modified-fva; BEGIN
+	//if ( !ammoInClip() ) {
+	float cstPlayingIdleEmpty = false;
+	if ( !ammoInClip() && !cstReloaded && !cstGetInstaReload() ) {
+	//#modified-fva; END
+		playCycle( ANIMCHANNEL_ALL, "idle_empty" );
+		//#modified-fva; BEGIN
+		cstPlayingIdleEmpty = true;
+		//#modified-fva; END
+	} else {
+		playCycle( ANIMCHANNEL_ALL, "idle" );
+	}
+	//#modified-fva; BEGIN
+	cstReloaded = false;
+	//#modified-fva; END
+	while( 1 ) {
+		//#modified-fva; BEGIN
+		//if ( WEAPON_LOWERWEAPON ) {
+		if ( WEAPON_LOWERWEAPON && !WEAPON_NETFIRING ) {
+		//#modified-fva; END
+			weaponState( "Lower", PISTOL_IDLE_TO_LOWER );
+		}
+		currentTime = sys.getTime();
+		ammoClip = ammoInClip();
+		//#modified-fva; BEGIN
+		//if ( ( currentTime >= next_attack ) && WEAPON_ATTACK ) {
+		if ( ( currentTime >= next_attack ) && ( WEAPON_ATTACK || WEAPON_NETFIRING ) ) {
+		//#modified-fva; END
+			//#modified-fva; BEGIN
+			//if ( ammoClip > 0 ) {
+			if ( ammoClip > 0 || WEAPON_NETFIRING ) {
+			//#modified-fva; END
+				//#modified-fva; BEGIN
+				cstSetNetfiring(true);
+				//#modified-fva; END
+				weaponState( "Fire", PISTOL_IDLE_TO_FIRE );
+			} else if ( ammoAvailable() > 0 ) {
+				if ( autoReload() ) {
+					netReload();
+					//#modified-fva; BEGIN
+					//weaponState( "Reload", PISTOL_IDLE_TO_RELOAD );
+					if (cstGetInstaReload()) {
+						addToClip( clipSize() );
+						cstSetNetfiring(true);
+						weaponState( "Fire", PISTOL_IDLE_TO_FIRE );
+					} else {
+						weaponState( "Reload", PISTOL_IDLE_TO_RELOAD );
+					}
+					//#modified-fva; END
+				}
+			}
+		}
+		if ( WEAPON_RELOAD && ( ammoAvailable() > ammoClip ) && ( ammoClip < clip_size ) ) {
+			netReload();
+			//#modified-fva; BEGIN
+			//weaponState( "Reload", PISTOL_IDLE_TO_RELOAD );
+			if (cstGetInstaReload()) {
+				addToClip( clipSize() );
+				if (cstPlayingIdleEmpty) {
+					weaponState( "Idle", PISTOL_IDLE_TO_RELOAD );
+				}
+			} else {
+				weaponState( "Reload", PISTOL_IDLE_TO_RELOAD );
+			}
+			//#modified-fva; END
+		}
+		if ( WEAPON_NETRELOAD ) {
+			WEAPON_NETRELOAD = false;
+			weaponState( "Reload", PISTOL_IDLE_TO_RELOAD );		
+		}
+		waitFrame();
+	}
+}
+
+void weapon_pistol::Fire() {
+	float ammoClip;
+
+	next_attack = sys.getTime() + PISTOL_FIRERATE;
+	
+	ammoClip = ammoInClip();
+	if ( ammoClip == PISTOL_LOWAMMO ) {
+		startSound( "snd_lowammo", SND_CHANNEL_ITEM, true );
+	}
+	
+	launchProjectiles( PISTOL_NUMPROJECTILES, spread, 0, 1.0, 1.0 );
+	playAnim( ANIMCHANNEL_ALL, "fire" );
+	waitUntil( animDone( ANIMCHANNEL_ALL, PISTOL_FIRE_TO_IDLE ) );
+	//#modified-fva; BEGIN
+	cstSetNetfiring(false);
+	//#modified-fva; END
+	weaponState( "Idle", PISTOL_FIRE_TO_IDLE );
+}
+
+void weapon_pistol::Reload() {
+	weaponReloading();
+	playAnim( ANIMCHANNEL_ALL, "reload" );
+	waitUntil( animDone( ANIMCHANNEL_ALL, PISTOL_RELOAD_TO_IDLE ) );
+	addToClip( clipSize() );
+	//#modified-fva; BEGIN
+	if (sys.isClient()) {
+		cstReloaded = true;
+	}
+	//#modified-fva; END
+	weaponState( "Idle", PISTOL_RELOAD_TO_IDLE );
+}
+
+void weapon_pistol::ExitCinematic() {
+	//#modified-fva; BEGIN
+	cstReloaded = false;
+	//#modified-fva; END
+	next_attack = 0;
+	weaponState( "Idle", 0 );
+}

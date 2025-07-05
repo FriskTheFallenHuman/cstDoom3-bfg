@@ -1,0 +1,5 @@
+//#modified-fva; BEGIN
+skin skins/characters/male_npc/cst_e6_bottech_gib {
+	models/characters/male_npc/soldier/soldier models/characters/male_npc/bot_tech/cst_bot_tech_gib
+}
+//#modified-fva; END

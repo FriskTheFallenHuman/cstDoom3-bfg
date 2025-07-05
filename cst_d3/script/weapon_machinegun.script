@@ -1,0 +1,196 @@
+/***********************************************************************
+
+weapon_machinegun.script
+
+***********************************************************************/
+
+#define MACHINEGUN_FIRERATE			0.1		// ~10 per second
+#define MACHINEGUN_LOWAMMO			10
+#define MACHINEGUN_NUMPROJECTILES	1
+
+// blend times
+#define MACHINEGUN_IDLE_TO_LOWER	4
+#define MACHINEGUN_IDLE_TO_FIRE		0
+#define	MACHINEGUN_IDLE_TO_RELOAD	4
+#define MACHINEGUN_RAISE_TO_IDLE	4
+#define MACHINEGUN_FIRE_TO_IDLE		0
+#define MACHINEGUN_RELOAD_TO_IDLE	4
+
+object weapon_machinegun : weapon_base {
+	//#modified-fva; BEGIN
+	float		cstIsMultiplayer;
+	//#modified-fva; END
+	float		next_attack;
+	float		spread;
+	
+	void		init();
+	
+	void		Lower();
+	void		Raise();
+	void		Idle();
+	void		Fire();
+	void		Reload();
+	void		ExitCinematic();
+};
+
+void weapon_machinegun::init() {
+	//#modified-fva; BEGIN
+	cstIsMultiplayer = sys.isMultiplayer();
+	//#modified-fva; END
+	next_attack = 0;
+	spread		= getFloatKey( "spread" );
+	weaponState( "Raise", 0 );
+}
+
+void weapon_machinegun::Raise() {
+	weaponRising();
+	playAnim( ANIMCHANNEL_ALL, "raise" );
+	waitUntil( animDone( ANIMCHANNEL_ALL, MACHINEGUN_RAISE_TO_IDLE ) );
+	weaponState( "Idle", MACHINEGUN_RAISE_TO_IDLE );
+}
+
+void weapon_machinegun::Lower() {
+	weaponLowering();
+	playAnim( ANIMCHANNEL_ALL, "putaway" );
+	waitUntil( animDone( ANIMCHANNEL_ALL, 0 ) );
+	weaponHolstered();
+	waitUntil( WEAPON_RAISEWEAPON );
+	weaponState( "Raise", 0 );
+}
+
+void weapon_machinegun::Idle() {
+	float currentTime;
+	float ammoClip;
+	float avail;
+	float clip_size;
+	
+	clip_size = clipSize();	
+	
+	if ( !ammoInClip() ) {
+		weaponOutOfAmmo();
+	} else {
+		weaponReady();
+	}
+
+	playCycle( ANIMCHANNEL_ALL, "idle" );
+	while( 1 ) {
+		//#modified-fva; BEGIN
+		//if ( WEAPON_LOWERWEAPON ) {
+		if ( WEAPON_LOWERWEAPON && !WEAPON_NETFIRING ) {
+		//#modified-fva; END
+			weaponState( "Lower", MACHINEGUN_IDLE_TO_LOWER );
+		}
+		currentTime = sys.getTime();
+		ammoClip = ammoInClip();
+		//#modified-fva; BEGIN
+		//if ( ( currentTime >= next_attack ) && WEAPON_ATTACK ) {
+		if ( ( currentTime >= next_attack ) && ( WEAPON_ATTACK || WEAPON_NETFIRING ) ) {
+		//#modified-fva; END
+			//#modified-fva; BEGIN
+			//if ( ammoClip > 0 ) {
+			if ( WEAPON_NETFIRING || ammoClip > 0 ) {
+			//#modified-fva; END
+				//#modified-fva; BEGIN
+				cstSetNetfiring(true);
+				//#modified-fva; END
+				weaponState( "Fire", MACHINEGUN_IDLE_TO_FIRE );
+			} else if ( ammoAvailable() > 0 ) {
+				if ( autoReload() ) {
+					netReload();
+					//#modified-fva; BEGIN
+					//weaponState( "Reload", MACHINEGUN_IDLE_TO_RELOAD );
+					if (cstGetInstaReload()) {
+						addToClip( clipSize() );
+						cstSetNetfiring(true);
+						weaponState( "Fire", MACHINEGUN_IDLE_TO_FIRE );
+					} else {
+						weaponState( "Reload", MACHINEGUN_IDLE_TO_RELOAD );
+					}
+					//#modified-fva; END
+				}
+			}
+		}
+		if ( WEAPON_RELOAD && ( ammoAvailable() > ammoClip ) && ( ammoClip < clip_size ) ) {
+			netReload();
+			//#modified-fva; BEGIN
+			//weaponState( "Reload", MACHINEGUN_IDLE_TO_RELOAD );
+			if (cstGetInstaReload()) {
+				addToClip( clipSize() );
+			} else {
+				weaponState( "Reload", MACHINEGUN_IDLE_TO_RELOAD );
+			}
+			//#modified-fva; END
+		}
+		if ( WEAPON_NETRELOAD ) {
+			WEAPON_NETRELOAD = false;
+			weaponState( "Reload", MACHINEGUN_IDLE_TO_RELOAD );
+		}
+		waitFrame();
+	}
+}
+
+void weapon_machinegun::Fire() {
+	float ammoClip;
+	float currentTime;
+	//#modified-fva; BEGIN
+	float cstFireAgain;
+	//#modified-fva; END
+	
+	next_attack = sys.getTime() + MACHINEGUN_FIRERATE;
+	
+	ammoClip = ammoInClip();
+	if ( ammoClip == MACHINEGUN_LOWAMMO ) {
+		startSound( "snd_lowammo", SND_CHANNEL_ITEM, true );
+	}
+	
+	launchProjectiles( MACHINEGUN_NUMPROJECTILES, spread, 0, 1.0, 1.0 );
+	playAnim( ANIMCHANNEL_ALL, "fire" );
+	while( !animDone( ANIMCHANNEL_ALL, MACHINEGUN_FIRE_TO_IDLE ) ) {
+		currentTime = sys.getTime();
+		ammoClip = ammoInClip();
+		//#modified-fva; BEGIN
+		/*
+		if ( ( currentTime >= next_attack ) && WEAPON_ATTACK && ( ammoClip > 0 ) ) {
+			weaponState( "Fire", 0 );
+		}
+		*/
+		if ( currentTime >= next_attack ) {
+			cstFireAgain = false;
+			if (WEAPON_NETFIRING) {
+				cstFireAgain = true;
+			} else if (WEAPON_ATTACK && !(cstIsMultiplayer && WEAPON_LOWERWEAPON)) {
+				if (ammoClip > 0) {
+					cstFireAgain = true;	
+				} else if (autoReload() && cstGetInstaReload() && ammoAvailable() > 0) {
+					addToClip( clipSize() );
+					cstFireAgain = true;
+				}
+			}
+			if (cstFireAgain) {
+				cstSetNetfiring(true);
+				weaponState( "Fire", 0 );
+			}
+			cstSetNetfiring(false);
+		}
+		//#modified-fva; END
+		waitFrame();
+	}
+
+	//#modified-fva; BEGIN
+	cstSetNetfiring(false);
+	//#modified-fva; END
+	weaponState( "Idle", MACHINEGUN_FIRE_TO_IDLE );
+}
+
+void weapon_machinegun::Reload() {
+	weaponReloading();
+	playAnim( ANIMCHANNEL_ALL, "reload" );
+	waitUntil( animDone( ANIMCHANNEL_ALL, MACHINEGUN_RELOAD_TO_IDLE ) );
+	addToClip( clipSize() );
+	weaponState( "Idle", MACHINEGUN_RELOAD_TO_IDLE );
+}
+
+void weapon_machinegun::ExitCinematic() {
+	next_attack = 0;
+	weaponState( "Idle", 0 );
+}

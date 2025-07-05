@@ -1,0 +1,15 @@
+//#modified-fva; BEGIN
+entityDef cst_hell1_grabber_1 {
+	"inherit"	"weapon_grabber"
+	"name"		"cst_weapon_grabber_1"
+	"origin"	"-9775 -710 -2790.5"
+	"rotation"	"-0.98 -0.17 0 0.17 -0.98 0 0 0 1"  // ang "0 190 0"
+}
+
+entityDef cst_hell1_shotgun_double_1 {
+	"inherit"	"weapon_shotgun_double"
+	"name"		"cst_weapon_shotgun_double_1"
+	"origin"	"-9721 -710 -2746.7"
+	"rotation"	"0.71 -0.71 0 0.7 0.7 0.17 -0.12 -0.12 0.98"  // ang "0 -45 10"
+}
+//#modified-fva; END

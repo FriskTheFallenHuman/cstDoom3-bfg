@@ -47,8 +47,6 @@ If you have questions concerning this license or the applicable additional terms
 #define CST_ENGINE_VERSION				"2.0"
 const int CST_NET_VERSION = 1475;
 const int CST_SAVEGAME_VERSION = 1475;
-
-#define CST_LIBBINKDEC 1
 //#modified-fva; END
 
 #define	BASE_GAMEDIR					"base"

@@ -1,0 +1,330 @@
+/***********************************************************************
+
+weapon_flashlight.script
+
+***********************************************************************/
+
+// blend times
+#define FLASHLIGHT_IDLE_TO_LOWER	4
+#define FLASHLIGHT_IDLE_TO_FIRE		2
+#define	FLASHLIGHT_IDLE_TO_RELOAD	4
+#define FLASHLIGHT_RAISE_TO_IDLE	4
+#define FLASHLIGHT_FIRE_TO_IDLE		4
+#define FLASHLIGHT_RELOAD_TO_IDLE	4
+
+// for dimming flashlight during plasma discharges in alphalabs2
+float global_flashlight_intensity = 1.0;
+
+object weapon_flashlight : weapon_base {
+	//#modified-fva; BEGIN
+	float		cstNetfired;
+	float		cstIsArmorFlashlight;
+	//#modified-fva; END
+	boolean		on;
+	boolean		onBeforeCinematic;
+	float		intensity;
+	string		skin_on;
+	string		skin_on_invis;
+	string		skin_off;
+	string		skin_off_invis;
+	//#modified-fva; BEGIN
+	string		cst_skin_on_hidden;
+	string		cst_skin_on_hidden_invis;
+	string		cst_skin_off_hidden;
+	string		cst_skin_off_hidden_invis;
+	//#modified-fva; END
+	
+	void		init();
+	
+	void		Lower();
+	void		Raise();
+	void		Idle();
+	void		Fire();
+	void		SetLight( boolean lightOn );
+	void		ToggleOnOff();
+	void		TurnOn();
+	void		TurnOff();
+	void		EnterCinematic();
+	void		ExitCinematic();
+	//#modified-fva; BEGIN
+	void		NetCatchup();
+	//#modified-fva; END
+
+	void		updateLightIntensity();
+
+				// called by the game
+	void		UpdateSkin();
+};
+
+void weapon_flashlight::init() {
+	//#modified-fva; BEGIN
+	cstNetfired = false;
+	cstIsArmorFlashlight = getKey( "cst_is_armor_flashlight" ) == "1";
+	//#modified-fva; END
+
+	skin_on			= getKey( "skin_on" );
+	skin_on_invis	= getKey( "skin_on_invis" );
+	skin_off		= getKey( "skin_off" );
+	skin_off_invis	= getKey( "skin_off_invis" );
+	//#modified-fva; BEGIN
+	cst_skin_on_hidden			= getKey( "skin_cst_on_hidden" );
+	cst_skin_on_hidden_invis	= getKey( "skin_cst_on_hidden_invis" );
+	cst_skin_off_hidden			= getKey( "skin_cst_off_hidden" );
+	cst_skin_off_hidden_invis	= getKey( "skin_cst_off_hidden_invis" );
+	//#modified-fva; END
+	
+	global_flashlight_intensity = 1.0;
+	intensity = 1.0;
+	setLightParm( 3, 1.0 );
+	setShaderParm( 3, 1.0 );
+	
+	weaponState( "Raise", 0 );
+}
+
+void weapon_flashlight::updateLightIntensity() {
+	if ( global_flashlight_intensity != intensity ) {
+		intensity = global_flashlight_intensity;
+		setLightParm( 3, intensity );
+		setShaderParm( 3, intensity );
+		UpdateSkin();
+	}
+}
+
+void weapon_flashlight::Raise() {
+	weaponRising();
+	playAnim( ANIMCHANNEL_ALL, "raise" );
+	SetLight( !getIntKey( "start_off" ) );
+	while( !animDone( ANIMCHANNEL_ALL, FLASHLIGHT_RAISE_TO_IDLE ) ) {
+		updateLightIntensity();
+		waitFrame();
+	}
+	//#modified-fva; BEGIN
+	cstBeginLightSync();
+	//#modified-fva; END
+	weaponState( "Idle", FLASHLIGHT_RAISE_TO_IDLE );
+}
+
+//#modified-fva; BEGIN
+void weapon_flashlight::NetCatchup() {
+	SetLight( !getIntKey( "start_off" ) );
+	cstBeginLightSync();
+	weaponState( "Idle", 0 );
+}
+//#modified-fva; END
+
+void weapon_flashlight::Lower() {
+	weaponLowering();
+	playAnim( ANIMCHANNEL_ALL, "putaway" );
+	waitUntil( animDone( ANIMCHANNEL_ALL, 0 ) );
+	weaponHolstered();
+	while( !WEAPON_RAISEWEAPON ) {
+		updateLightIntensity();
+		waitFrame();
+	}
+	weaponState( "Raise", 0 );
+}
+
+void weapon_flashlight::Idle() {
+	weaponReady();
+	playCycle( ANIMCHANNEL_ALL, "idle" );
+	while( 1 ) {
+		updateLightIntensity();
+		if ( WEAPON_LOWERWEAPON ) {
+			weaponState( "Lower", FLASHLIGHT_IDLE_TO_LOWER );
+		}
+		//#modified-fva; BEGIN
+		//if ( WEAPON_ATTACK ) {
+		if ( WEAPON_ATTACK || WEAPON_NETFIRING ) {
+		//#modified-fva; END
+			//#modified-fva; BEGIN
+			cstNetfired = WEAPON_NETFIRING;
+			cstSetNetfiring(true);
+			//#modified-fva; END
+			weaponState( "Fire", FLASHLIGHT_IDLE_TO_FIRE );
+		}
+		if ( WEAPON_RELOAD ) {
+			//#modified-fva; BEGIN
+			/*
+			if ( sys.isMultiplayer() ) {
+				weaponState( "ToggleOnOff", FLASHLIGHT_IDLE_TO_RELOAD );
+			}
+			*/
+			weaponState( "ToggleOnOff", FLASHLIGHT_IDLE_TO_RELOAD );
+			//#modified-fva; END
+		}
+		waitFrame();
+	}
+}
+
+void weapon_flashlight::Fire() {
+	float waitTime;
+
+	//#modified-fva; BEGIN
+	/*
+	playAnim( ANIMCHANNEL_ALL, "fire" );
+	waitTime = sys.getTime() + 0.1;
+	while( sys.getTime() < waitTime ) {
+		updateLightIntensity();
+		waitFrame();
+	}
+	melee();
+	while( !animDone( ANIMCHANNEL_ALL, FLASHLIGHT_FIRE_TO_IDLE ) ) {
+		updateLightIntensity();
+		waitFrame();
+	}
+	weaponState( "Idle", FLASHLIGHT_FIRE_TO_IDLE );
+	*/
+	
+	if (!sys.isMultiplayer()) {
+		do {
+			playAnim( ANIMCHANNEL_ALL, "fire" );
+			waitTime = sys.getTime() + 0.1;
+			while( sys.getTime() < waitTime ) {
+				updateLightIntensity();
+				waitFrame();
+			}
+			melee();
+			while( !animDone( ANIMCHANNEL_ALL, FLASHLIGHT_FIRE_TO_IDLE ) ) {
+				updateLightIntensity();
+				waitFrame();
+			}
+		} while ( WEAPON_ATTACK || WEAPON_NETFIRING );
+	} else {
+		float cstBreak = false;
+		do {
+			playAnim( ANIMCHANNEL_ALL, "fire" );
+			waitTime = sys.getTime() + 0.1;
+			while( sys.getTime() < waitTime ) {
+				updateLightIntensity();
+				waitFrame();
+			}
+			melee();
+
+			while( !animDone( ANIMCHANNEL_ALL, FLASHLIGHT_FIRE_TO_IDLE + 5 ) ) {
+				updateLightIntensity();
+				waitFrame();
+			}
+			if ( !cstNetfired && (!WEAPON_ATTACK || WEAPON_LOWERWEAPON) ) {
+				cstBreak = true;
+				cstSetNetfiring(false);
+			}
+
+			while( !animDone( ANIMCHANNEL_ALL, FLASHLIGHT_FIRE_TO_IDLE ) ) {
+				updateLightIntensity();
+				waitFrame();
+			}
+		} while ( (!cstNetfired && !cstBreak) || (cstNetfired && WEAPON_NETFIRING) );
+	}
+	weaponState( "Idle", FLASHLIGHT_FIRE_TO_IDLE );
+	//#modified-fva; END
+}
+
+void weapon_flashlight::SetLight( boolean lightOn ) {
+	on = lightOn;
+	UpdateSkin();
+	flashlight( on );
+}
+
+void weapon_flashlight::ToggleOnOff() {
+	float waitTime;
+
+	playAnim( ANIMCHANNEL_ALL, "reload" );
+	
+	//#modified-fva; BEGIN
+	//updateLightIntensity();
+	waitTime = sys.getTime() + 0.2;
+	while( sys.getTime() < waitTime ) {
+		updateLightIntensity();
+		waitFrame();
+	}
+	//#modified-fva; END
+
+	SetLight( !on );
+	
+	while( !animDone( ANIMCHANNEL_ALL, FLASHLIGHT_RELOAD_TO_IDLE ) ) {
+		updateLightIntensity();
+		waitFrame();
+	}
+	//#modified-fva; BEGIN
+	weaponState( "Idle", FLASHLIGHT_RELOAD_TO_IDLE );
+	//#modified-fva; END
+}
+
+void weapon_flashlight::TurnOn() {
+
+	SetLight( true );
+}
+
+void weapon_flashlight::TurnOff() {
+
+	SetLight( false );
+}
+
+void weapon_flashlight::EnterCinematic() {
+	onBeforeCinematic = on;
+	SetLight( false );
+	weaponState( "Idle", 0 );
+}
+
+void weapon_flashlight::ExitCinematic() {
+	//#modified-fva; BEGIN
+	cstNetfired = false;
+	//#modified-fva; END
+	SetLight( onBeforeCinematic );
+	intensity = 1.0;
+	updateLightIntensity();
+	weaponState( "Idle", 0 );
+}
+
+//#modified-fva; BEGIN
+/*
+void weapon_flashlight::UpdateSkin() {
+	if ( on && ( global_flashlight_intensity > 0 ) ) {
+		if ( !isInvisible() ) {
+			setSkin( skin_on );
+		} else {
+			setSkin( skin_on_invis );
+		}
+	} else {
+		if ( !isInvisible() ) {
+			setSkin( skin_off );
+		} else {
+			setSkin( skin_off_invis );
+		}
+	}
+}
+*/
+void weapon_flashlight::UpdateSkin() {
+	float cstHideModel = cstIsArmorFlashlight && sys.getcvar("cst_armorFlashlightHideModel") == "2";
+
+	if ( on && ( global_flashlight_intensity > 0 ) ) {
+		if ( cstHideModel ) {
+			if ( !isInvisible() ) {
+				setSkin( cst_skin_on_hidden );
+			} else {
+				setSkin( cst_skin_on_hidden_invis );
+			}
+		} else {
+			if ( !isInvisible() ) {
+				setSkin( skin_on );
+			} else {
+				setSkin( skin_on_invis );
+			}
+		}
+	} else {
+		if ( cstHideModel ) {
+			if ( !isInvisible() ) {
+				setSkin( cst_skin_off_hidden );
+			} else {
+				setSkin( cst_skin_off_hidden_invis );
+			}
+		} else {
+			if ( !isInvisible() ) {
+				setSkin( skin_off );
+			} else {
+				setSkin( skin_off_invis );
+			}
+		}
+	}
+}
+//#modified-fva; END

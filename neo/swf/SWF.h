@@ -368,19 +368,7 @@ private:
 	// SWF_Image.cpp
 	//----------------------------------
 
-	class idDecompressJPEG {
-	public:
-		idDecompressJPEG();
-		~idDecompressJPEG();
-
-		byte * Load( const byte * input, int inputSize, int & width, int & height );
-
-	private:
-		void * vinfo;
-	};
-
-	idDecompressJPEG	jpeg;
-
+	byte *			LoadJPEG( const byte * input, int inputSize, int & width, int & height );
 	void			LoadImage( int characterID, const byte * imageData, int width, int height );
 
 	void			JPEGTables( idSWFBitStream & bitstream );
@@ -423,7 +411,7 @@ private:
 	void			DefineEditText( idSWFBitStream & bitstream );
 
 	//----------------------------------
-	// SWF_Zlib.cpp
+	// SWF_Inflate.cpp
 	//----------------------------------
 	bool			Inflate( const byte * input, int inputSize, byte * output, int outputSize );
 

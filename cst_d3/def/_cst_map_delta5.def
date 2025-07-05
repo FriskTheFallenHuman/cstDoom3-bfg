@@ -1,0 +1,15 @@
+//#modified-fva; BEGIN
+entityDef cst_delta5_grabber_1 {
+	"inherit"	"weapon_grabber"
+	"name"		"cst_weapon_grabber_1"
+	"origin"	"1940 1200 -647.8"
+	"rotation"	"0.94 0.34 0 0 0 -1 -0.34 0.94 0"  // ang "0 20 -90"
+}
+
+entityDef cst_delta5_shotgun_double_1 {
+	"inherit"	"weapon_shotgun_double"
+	"name"		"cst_weapon_shotgun_double_1"
+	"origin"	"2015 1570 -642.8"
+	"rotation"	"0.94 0.34 0 -0.34 0.93 0.17 0.06 -0.16 0.98"  // ang "0 20 10"
+}
+//#modified-fva; END

@@ -28,7 +28,7 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __FILE_SAVEGAME_H__
 #define __FILE_SAVEGAME_H__
 
-#include "../_libs/zlib/zlib.h"
+#include "../_libs/miniz/miniz.h"
 
 // Listing of the types of files within a savegame package
 enum saveGameType_t {
@@ -192,8 +192,8 @@ private:
 	// These variables are used to pass data between threads in a thread-safe manner.
 	//------------------------
 
-	byte *					dataZlib;
-	size_t					bytesZlib;
+	byte *					dataMiniz;
+	size_t					bytesMiniz;
 
 	byte *					dataIO;
 	size_t					bytesIO;
@@ -202,9 +202,9 @@ private:
 	// These variables are used by CompressBlock() and DecompressBlock().
 	//------------------------
 
-	z_stream				zStream;
-	int						zLibFlushType;		// Z_NO_FLUSH or Z_FINISH
-	bool					zStreamEndHit;
+	mz_stream				mzStream;
+	int						mzFlushType;		// MZ_NO_FLUSH or MZ_FINISH
+	bool					mzStreamEndHit;
 	int						numChecksums;
 
 	//------------------------

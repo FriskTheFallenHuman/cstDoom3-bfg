@@ -1,0 +1,8 @@
+//#modified-fva; BEGIN
+entityDef cst_le_enpro1_chainsaw_1 {
+	"inherit"	"weapon_chainsaw"
+	"name"		"cst_weapon_chainsaw_1"
+	"origin"	"-735.36 -331.21 5.68"
+	"rotation"	"-0.0495566 0.0623905 0.996821 0.725816 -0.683354 0.0788545 0.686102 0.727416 -0.0114193"  // ang "-85.43 128.46 98.24"
+}
+//#modified-fva; END

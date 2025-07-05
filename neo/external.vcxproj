@@ -27,174 +27,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="_libs\zlib\adler32.c" />
-    <ClCompile Include="_libs\zlib\compress.c" />
-    <ClCompile Include="_libs\zlib\crc32.c" />
-    <ClCompile Include="_libs\zlib\deflate.c" />
-    <ClCompile Include="_libs\zlib\gzio.c" />
-    <ClCompile Include="_libs\zlib\infback.c" />
-    <ClCompile Include="_libs\zlib\inffast.c" />
-    <ClCompile Include="_libs\zlib\inflate.c" />
-    <ClCompile Include="_libs\zlib\inftrees.c" />
-    <ClCompile Include="_libs\zlib\trees.c" />
-    <ClCompile Include="_libs\zlib\uncompr.c" />
-    <ClCompile Include="_libs\zlib\zutil.c" />
-    <ClCompile Include="_libs\jpeg-6\jcapimin.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jccoefct.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jccolor.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jcdctmgr.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jchuff.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jcinit.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jcmainct.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jcmarker.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jcmaster.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jcomapi.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jcparam.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jcphuff.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jcprepct.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jcsample.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdapimin.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdapistd.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdatadst.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdatasrc.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdcoefct.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdcolor.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jddctmgr.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdhuff.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdinput.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdmainct.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdmarker.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdmaster.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdmerge.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdphuff.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdpostct.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdsample.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jdtrans.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jerror.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jfdctflt.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jfdctfst.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jfdctint.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jidctflt.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jidctfst.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jidctint.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jidctred.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jmemmgr.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jmemnobs.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jquant1.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jquant2.cpp" />
-    <ClCompile Include="_libs\jpeg-6\jutils.cpp" />
-    <ClCompile Include="_libs\libogg\src\bitwise.c" />
-    <ClCompile Include="_libs\libogg\src\framing.c" />
+    <ClCompile Include="_libs\minizip\ioapi.c" />
+    <ClCompile Include="_libs\minizip\unzip.cpp" />
+    <ClCompile Include="_libs\minizip\zip.cpp" />
+    <ClCompile Include="_libs\miniz\miniz.c" />
+    <ClCompile Include="_libs\stb\stblib_impls.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="_libs\jpeg-6\jchuff.h" />
-    <ClInclude Include="_libs\jpeg-6\jconfig.h" />
-    <ClInclude Include="_libs\jpeg-6\jdct.h" />
-    <ClInclude Include="_libs\jpeg-6\jdhuff.h" />
-    <ClInclude Include="_libs\jpeg-6\jerror.h" />
-    <ClInclude Include="_libs\jpeg-6\jinclude.h" />
-    <ClInclude Include="_libs\jpeg-6\jmemsys.h" />
-    <ClInclude Include="_libs\jpeg-6\jmorecfg.h" />
-    <ClInclude Include="_libs\jpeg-6\jpegint.h" />
-    <ClInclude Include="_libs\jpeg-6\jpeglib.h" />
-    <ClInclude Include="_libs\jpeg-6\jversion.h" />
-    <ClInclude Include="_libs\libogg\include\ogg\ogg.h" />
-    <ClInclude Include="_libs\libogg\include\ogg\os_types.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="_libs\libogg\win32\ogg.def" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="_libs\libtheora\include\theora\codec.h" />
-    <ClInclude Include="_libs\libtheora\include\theora\theora.h" />
-    <ClInclude Include="_libs\libtheora\include\theora\theoradec.h" />
-    <ClInclude Include="_libs\libtheora\lib\internal.h" />
-    <ClInclude Include="_libs\libtheora\lib\encint.h" />
-    <ClInclude Include="_libs\libtheora\lib\enquant.h" />
-    <ClInclude Include="_libs\libtheora\lib\huffenc.h" />
-    <ClInclude Include="_libs\libtheora\lib\mathops.h" />
-    <ClInclude Include="_libs\libtheora\lib\modedec.h" />
-    <ClInclude Include="_libs\libtheora\lib\apiwrapper.h" />
-    <ClInclude Include="_libs\libtheora\lib\bitpack.h" />
-    <ClInclude Include="_libs\libtheora\lib\dct.h" />
-    <ClInclude Include="_libs\libtheora\lib\decint.h" />
-    <ClInclude Include="_libs\libtheora\lib\dequant.h" />
-    <ClInclude Include="_libs\libtheora\lib\huffdec.h" />
-    <ClInclude Include="_libs\libtheora\lib\huffman.h" />
-    <ClInclude Include="_libs\libtheora\lib\idct.h" />
-    <ClInclude Include="_libs\libtheora\lib\ocintrin.h" />
-    <ClInclude Include="_libs\libtheora\lib\quant.h" />
-    <ClInclude Include="_libs\libtheora\lib\x86_vc\x86cpu.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="_libs\libtheora\lib\analyze.c" />
-    <ClCompile Include="_libs\libtheora\lib\encapiwrapper.c" />
-    <ClCompile Include="_libs\libtheora\lib\encfrag.c" />
-    <ClCompile Include="_libs\libtheora\lib\encinfo.c" />
-    <ClCompile Include="_libs\libtheora\lib\encode.c" />
-    <ClCompile Include="_libs\libtheora\lib\encoder_disabled.c">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Retail|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="_libs\libtheora\lib\enquant.c" />
-    <ClCompile Include="_libs\libtheora\lib\fdct.c" />
-    <ClCompile Include="_libs\libtheora\lib\huffenc.c" />
-    <ClCompile Include="_libs\libtheora\lib\mathops.c" />
-    <ClCompile Include="_libs\libtheora\lib\mcenc.c" />
-    <ClCompile Include="_libs\libtheora\lib\rate.c" />
-    <ClCompile Include="_libs\libtheora\lib\tokenize.c" />
-    <ClCompile Include="_libs\libtheora\lib\x86_vc\mmxencfrag.c" />
-    <ClCompile Include="_libs\libtheora\lib\x86_vc\mmxfdct.c" />
-    <ClCompile Include="_libs\libtheora\lib\x86_vc\x86cpu.c" />
-    <ClCompile Include="_libs\libtheora\lib\x86_vc\x86enc.c" />
-    <ClCompile Include="_libs\libtheora\lib\apiwrapper.c" />
-    <ClCompile Include="_libs\libtheora\lib\bitpack.c" />
-    <ClCompile Include="_libs\libtheora\lib\decapiwrapper.c" />
-    <ClCompile Include="_libs\libtheora\lib\decinfo.c" />
-    <ClCompile Include="_libs\libtheora\lib\decode.c">
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
-      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
-      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
-    </ClCompile>
-    <ClCompile Include="_libs\libtheora\lib\dequant.c" />
-    <ClCompile Include="_libs\libtheora\lib\fragment.c" />
-    <ClCompile Include="_libs\libtheora\lib\huffdec.c" />
-    <ClCompile Include="_libs\libtheora\lib\idct.c">
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
-      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
-      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
-    </ClCompile>
-    <ClCompile Include="_libs\libtheora\lib\info.c" />
-    <ClCompile Include="_libs\libtheora\lib\internal.c" />
-    <ClCompile Include="_libs\libtheora\lib\quant.c">
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
-      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
-      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
-    </ClCompile>
-    <ClCompile Include="_libs\libtheora\lib\state.c" />
-    <ClCompile Include="_libs\libtheora\lib\x86_vc\mmxfrag.c" />
-    <ClCompile Include="_libs\libtheora\lib\x86_vc\mmxidct.c" />
-    <ClCompile Include="_libs\libtheora\lib\x86_vc\mmxstate.c" />
-    <ClCompile Include="_libs\libtheora\lib\x86_vc\x86state.c" />
+    <None Include="_libs\miniz\readme.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="_libs\libbinkdec\include\avfft.h" />
@@ -232,6 +72,13 @@
     <ClCompile Include="_libs\libbinkdec\src\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="_libs\minizip\ioapi.h" />
+    <ClInclude Include="_libs\minizip\unzip.h" />
+    <ClInclude Include="_libs\minizip\zip.h" />
+    <ClInclude Include="_libs\miniz\miniz.h" />
+    <ClInclude Include="_libs\miniz\minizconf.h" />
+    <ClInclude Include="_libs\stb\stb_image.h" />
+    <ClInclude Include="_libs\stb\stb_image_write.h" />
     <ClInclude Include="_libs\timidity\common.h" />
     <ClInclude Include="_libs\timidity\config.h" />
     <ClInclude Include="_libs\timidity\controls.h" />
@@ -260,6 +107,10 @@
     <ClCompile Include="_libs\timidity\sdl_c.cpp" />
     <ClCompile Include="_libs\timidity\tables.cpp" />
     <ClCompile Include="_libs\timidity\timidity.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="_libs\minizip\MiniZip64_info.txt" />
+    <Text Include="_libs\miniz\LICENSE.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B679FDA2-CB76-4348-906B-4CAA294195FD}</ProjectGuid>

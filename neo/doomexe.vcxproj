@@ -406,7 +406,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Retail|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="framework\TokenParser.cpp" />
-    <ClCompile Include="framework\Unzip.cpp" />
     <ClCompile Include="framework\UsercmdGen.cpp" />
     <ClCompile Include="framework\Zip.cpp" />
     <ClCompile Include="renderer\AutoRender.cpp" />
@@ -506,6 +505,7 @@
     <ClCompile Include="sound\snd_system.cpp" />
     <ClCompile Include="sound\snd_world.cpp" />
     <ClCompile Include="swf\SWF_Bitstream.cpp" />
+    <ClCompile Include="swf\SWF_Deflated.cpp" />
     <ClCompile Include="swf\SWF_Dictionary.cpp" />
     <ClCompile Include="swf\SWF_Events.cpp" />
     <ClCompile Include="swf\SWF_Image.cpp" />
@@ -525,7 +525,6 @@
     <ClCompile Include="swf\SWF_Sprites.cpp" />
     <ClCompile Include="swf\SWF_Text.cpp" />
     <ClCompile Include="swf\SWF_TextInstance.cpp" />
-    <ClCompile Include="swf\SWF_Zlib.cpp" />
     <ClCompile Include="sys\LightweightCompression.cpp" />
     <ClCompile Include="sys\PacketProcessor.cpp" />
     <ClCompile Include="sys\Snapshot.cpp" />

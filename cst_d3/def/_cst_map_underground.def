@@ -1,0 +1,15 @@
+//#modified-fva; BEGIN
+entityDef cst_underground_grabber_1 {
+	"inherit"	"weapon_grabber"
+	"name"		"cst_weapon_grabber_1"
+	"origin"	"613 -490 64"
+	"rotation"	"-1 0 0 0 -1 0 0 0 1"  // ang "0 180 0"
+}
+
+entityDef cst_underground_shotgun_double_1 {
+	"inherit"	"weapon_shotgun_double"
+	"name"		"cst_weapon_shotgun_double_1"
+	"origin"	"1040 1300 170.15"
+	"rotation"	"0 0 -1 -0.34 0.94 0 0.94 0.34 0"  // ang "90 20 0"
+}
+//#modified-fva; END

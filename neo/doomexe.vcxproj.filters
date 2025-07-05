@@ -593,9 +593,6 @@
     <ClCompile Include="framework\KeyInput.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="framework\Unzip.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="framework\UsercmdGen.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
@@ -962,9 +959,6 @@
     <ClCompile Include="swf\SWF_TextInstance.cpp">
       <Filter>SWF</Filter>
     </ClCompile>
-    <ClCompile Include="swf\SWF_Zlib.cpp">
-      <Filter>SWF</Filter>
-    </ClCompile>
     <ClCompile Include="renderer\Font.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
@@ -1126,6 +1120,9 @@
     </ClCompile>
     <ClCompile Include="sys\win32\win_session_local.cpp">
       <Filter>Sys\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="swf\SWF_Deflated.cpp">
+      <Filter>SWF</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

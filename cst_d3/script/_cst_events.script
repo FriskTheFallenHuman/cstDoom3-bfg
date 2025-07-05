@@ -1,0 +1,22 @@
+//#modified-fva; BEGIN
+// entities
+scriptEvent void cstDeleteKey(string key);
+// weapons
+scriptEvent float cstGetAux();
+scriptEvent void cstSetAux(float aux);
+scriptEvent void cstBeginLightSync();
+scriptEvent void cstSetNetfiring(float isNetfiring);
+scriptEvent void cstSetWeaponGuiParm(string key, string value);
+scriptEvent float cstGetAutoReloadDbs();
+scriptEvent float cstGetInstaReload();
+// monsters
+scriptEvent void cstClearGrabbed();
+scriptEvent entity cstFindHittableEnemy(float useFov);
+scriptEvent entity cstFindHittableEnemyAI(float useFov);
+// players
+scriptEvent void cstDamage(string damageDef);
+scriptEvent float cstGetAwDbsD3();
+scriptEvent float cstGetAwGrabberD3();
+scriptEvent float cstGetAwChainsawRoE();
+scriptEvent float cstGetAwChainsawLM();
+//#modified-fva; END
